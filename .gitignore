@@ -1,0 +1,35 @@
+# Node
+node_modules/*
+npm-debug.log
+
+# TypeScript
+src/*.js
+src/*.map
+src/*.d.ts
+
+# JetBrains
+.idea
+.project
+.settings
+.idea/*
+*.iml
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Ngc generated files
+**/*.ngfactory.ts
+
+# Build files
+dist/*
+
+# Playground tmp files
+.playground
+playground/*
+
+# Probably not needed either
+.travis.yml
+.yo-rc.json
+bs-config.json
+package-lock.json

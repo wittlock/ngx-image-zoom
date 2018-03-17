@@ -4,6 +4,12 @@
 
 Still in early development, documentation is lacking still.
 
+## About
+
+NgxImageZoom is inspired by JQuery libraries such as [jQuery Zoom](http://www.jacklmoore.com/zoom/) and
+[elevateZoom-plus](http://igorlino.github.io/elevatezoom-plus/) but a pure Angular2 implementation of the
+similar concepts. 
+
 ## Installation
 
 To install this library, run:
@@ -51,7 +57,6 @@ Once the library is imported, you can use its component in your Angular applicat
     [fullImage]="my-fullres-image.jpg"
 ></ngx-image-zoom>
 ```
-
 
 ## License
 

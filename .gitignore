@@ -1,0 +1,10 @@
+.idea/
+*.iml
+node_modules/
+.playground/
+playground/
+.travis.yml
+.yo-rc.json
+bs-config.json
+dist/
+package-lock.json

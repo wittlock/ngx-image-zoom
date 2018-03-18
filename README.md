@@ -1,5 +1,7 @@
 # ngx-image-zoom
 
+[![npm version](http://img.shields.io/npm/v/ngx-image-zoom.svg)](https://npmjs.org/package/ngx-image-zoom)
+
 ## Project status
 
 Still in early development, documentation is lacking still.

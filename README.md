@@ -4,7 +4,10 @@
 
 ## Project status
 
-Still in early development, documentation is lacking still.
+Still in early development, more features are planned and incoming. Should be in a working 
+state right now but it's not tested in lots of different setups yet.
+
+Demonstration of available features available [here](https://wittlock.github.io/ngx-image-zoom/).
 
 ## About
 

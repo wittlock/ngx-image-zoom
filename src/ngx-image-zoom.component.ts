@@ -49,7 +49,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        console.log('ZoomMode: ' + this.zoomMode);
+        // console.log('ZoomMode: ' + this.zoomMode);
         if (this.zoomMode === 'hover') {
             this.renderer.listen(this.zoomContainer.nativeElement, 'mouseenter', (event) => this.hoverMouseEnter(event));
             this.renderer.listen(this.zoomContainer.nativeElement, 'mouseleave', () => this.hoverMouseLeave());

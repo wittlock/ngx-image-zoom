@@ -20,19 +20,19 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     @ViewChild('imageThumbnail') imageThumbnail: ElementRef;
     @ViewChild('fullSizeImage') fullSizeImage: ElementRef;
 
-    protected display: string;
-    protected fullImageTop: number;
-    protected fullImageLeft: number;
-    protected magnifiedWidth: number;
-    protected magnifiedHeight: number;
-    protected lensTop: number;
-    protected lensLeft: number;
-    protected lensBorderRadius = 0;
+    display: string;
+    fullImageTop: number;
+    fullImageLeft: number;
+    magnifiedWidth: number;
+    magnifiedHeight: number;
+    lensTop: number;
+    lensLeft: number;
+    lensBorderRadius = 0;
 
-    protected thumbWidth: number;
-    protected thumbHeight: number;
-    protected fullWidth: number;
-    protected fullHeight: number;
+    thumbWidth: number;
+    thumbHeight: number;
+    fullWidth: number;
+    fullHeight: number;
 
     private baseRatio: number;
     private xRatio: number;
@@ -88,7 +88,22 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
         this.calculateImageAndLensPosition();
     }
 
-    protected onMouseWheel(event: any) {
+    /**
+     * Template helper methods
+     */
+    thumbImageLoaded() {
+        this.calculateRatioAndOffset();
+    }
+
+    fullImageLoaded() {
+        this.calculateRatioAndOffset();
+        this.calculateImageAndLensPosition();
+    }
+
+    /**
+     * Mouse wheel event
+     */
+    private onMouseWheel(event: any) {
         event = window.event || event; // old IE
         const direction = Math.max(Math.min((event.wheelDelta || -event.detail), 1), -1);
         if (direction > 0) {
@@ -112,22 +127,22 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     /**
      * Hover mode
      */
-    protected hoverMouseEnter(event: MouseEvent) {
+    private hoverMouseEnter(event: MouseEvent) {
         this.zoomOn(event);
     }
 
-    protected hoverMouseLeave() {
+    private hoverMouseLeave() {
         this.zoomOff();
     }
 
-    protected hoverMouseMove(event: MouseEvent) {
+    private hoverMouseMove(event: MouseEvent) {
         this.calculateZoomPosition(event);
     }
 
     /**
      * Toggle mode
      */
-    protected toggleClick(event: MouseEvent) {
+    private toggleClick(event: MouseEvent) {
         if (this.zoomingEnabled) {
             this.zoomOff();
         } else {
@@ -139,19 +154,19 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     /**
      * Click mode
      */
-    protected clickStarter(event: MouseEvent) {
+    private clickStarter(event: MouseEvent) {
         if (this.zoomingEnabled === false) {
             this.zoomingEnabled = true;
             this.zoomOn(event);
         }
     }
 
-    protected clickMouseLeave() {
+    private clickMouseLeave() {
         this.zoomOff();
         this.zoomingEnabled = false;
     }
 
-    protected clickMouseMove(event: MouseEvent) {
+    private clickMouseMove(event: MouseEvent) {
         if (this.zoomingEnabled) {
             this.calculateZoomPosition(event);
         }
@@ -160,25 +175,25 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     /**
      * Hover freeze mode
      */
-    protected hoverFreezeMouseEnter(event: MouseEvent) {
+    private hoverFreezeMouseEnter(event: MouseEvent) {
         if (this.zoomingEnabled && !this.zoomFrozen) {
             this.zoomOn(event);
         }
     }
 
-    protected hoverFreezeMouseLeave() {
+    private hoverFreezeMouseLeave() {
         if (this.zoomingEnabled && !this.zoomFrozen) {
             this.zoomOff();
         }
     }
 
-    protected hoverFreezeMouseMove(event: MouseEvent) {
+    private hoverFreezeMouseMove(event: MouseEvent) {
         if (this.zoomingEnabled && !this.zoomFrozen) {
             this.calculateZoomPosition(event);
         }
     }
 
-    protected hoverFreezeClick(event: MouseEvent) {
+    private hoverFreezeClick(event: MouseEvent) {
         if (this.zoomingEnabled && this.zoomFrozen) {
             this.zoomingEnabled = false;
             this.zoomFrozen = false;
@@ -189,18 +204,6 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
             this.zoomingEnabled = true;
             this.zoomOn(event);
         }
-    }
-
-    /**
-     * Template helper methods
-     */
-    protected thumbImageLoaded() {
-        this.calculateRatioAndOffset();
-    }
-
-    protected fullImageLoaded() {
-        this.calculateRatioAndOffset();
-        this.calculateImageAndLensPosition();
     }
 
     /**

@@ -1,6 +1,6 @@
 {
     "name": "ngx-image-zoom",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "scripts": {
         "build": "gulp build",
         "build:watch": "gulp",
@@ -23,7 +23,9 @@
         "email": "1336118+wittlock@users.noreply.github.com"
     },
     "keywords": [
-        "angular5", "angular5 component", "image zoom"
+        "angular5",
+        "angular5 component",
+        "image zoom"
     ],
     "license": "MIT",
     "bugs": {

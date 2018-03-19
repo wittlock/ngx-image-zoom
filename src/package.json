@@ -1,6 +1,6 @@
 {
     "name": "ngx-image-zoom",
-    "version": "0.1.0",
+    "version": "0.1.2",
     "repository": {
         "type": "git",
         "url": "https://www.github.com/wittlock/ngx-image-zoom"
@@ -10,7 +10,9 @@
         "email": "1336118+wittlock@users.noreply.github.com"
     },
     "keywords": [
-        "angular"
+        "angular5",
+        "angular5 component",
+        "image zoom"
     ],
     "license": "MIT",
     "bugs": {

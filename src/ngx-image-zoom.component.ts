@@ -260,10 +260,12 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
         // getBoundingClientRect() ? https://stackoverflow.com/a/44008873
         this.offsetTop = this.zoomContainer.nativeElement.offsetTop;
         this.offsetLeft = this.zoomContainer.nativeElement.offsetLeft;
-        // If we have an offsetParent, we need to add its offset too.
-        if (this.zoomContainer.nativeElement.offsetParent) {
-            this.offsetTop += this.zoomContainer.nativeElement.offsetParent.offsetTop;
-            this.offsetLeft += this.zoomContainer.nativeElement.offsetParent.offsetLeft;
+        // If we have an offsetParent, we need to add its offset too and recurse until we can't find more offsetParents.
+        let parentContainer = this.zoomContainer.nativeElement.offsetParent;
+        while (parentContainer != null) {
+            this.offsetTop += parentContainer.offsetTop;
+            this.offsetLeft += parentContainer.offsetLeft;
+            parentContainer = parentContainer.offsetParent;
         }
         // console.log('OffsetTop: ' + this.offsetTop + ' | OffsetLeft: ' + this.offsetLeft);
         // console.log(this.imageThumbnail);

@@ -51,6 +51,14 @@ in size to the thumbnail. For example, if the full size image is 10x larger than
 default to *0.1*, as in the full size image can at its smallest be shown at 0.1 times its original size. The default
 value for *maxZoomRatio* being *1* means the largest the fullSize image can appear is twice its original size. 
 
+## Available output
+
+The component outputs the follow events that can be triggered on.
+
+Event name | Description
+---|---
+onZoomScroll | Whenever the user changes the zoom level using the scroll wheel this event will fire with the current zoom ratio (see above).
+
 ## Installation
 
 To install this library, run:

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnChanges, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 
 @Component({
     selector: 'ngx-image-zoom',
@@ -15,6 +15,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     @ViewChild('zoomContainer') zoomContainer: ElementRef;
     @ViewChild('imageThumbnail') imageThumbnail: ElementRef;
     @ViewChild('fullSizeImage') fullSizeImage: ElementRef;
+
+    @Output() onZoomScroll = new EventEmitter<number>();
 
     public display: string;
     public fullImageTop: number;
@@ -65,6 +67,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     @Input('magnification')
     public set setMagnification(magnification: number) {
         this.magnification = Number(magnification) || this.magnification;
+        this.onZoomScroll.emit(this.magnification);
     }
 
     @Input('minZoomRatio')
@@ -167,10 +170,10 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
         const direction = Math.max(Math.min((event.wheelDelta || -event.detail), 1), -1);
         if (direction > 0) {
             // up
-            this.magnification = Math.min(this.magnification + this.scrollStepSize, this.maxZoomRatio);
+            this.setMagnification = Math.min(this.magnification + this.scrollStepSize, this.maxZoomRatio);
         } else {
             // down
-            this.magnification = Math.max(this.magnification - this.scrollStepSize, this.minZoomRatio);
+            this.setMagnification = Math.max(this.magnification - this.scrollStepSize, this.minZoomRatio);
         }
         this.calculateRatio();
         this.calculateZoomPosition(event);

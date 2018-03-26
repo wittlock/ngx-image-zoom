@@ -21,8 +21,8 @@ similar concepts. This plugin works with both URLs to images and in-line images
 All settings except *thumbImage* are optional. If no *fullImage* is provided the thumbImage will be
 used as the high resolution version as well.
 
-Option | Default value | Description
----|---|---
+Option | Default&#160;value | Description
+:---:|:---:|---
 thumbImage | *none* | (Required) The smaller version of the image that will be shown when there's no interaction by the user.
 fullImage | *none* | The full resolution version of the image to be used when zooming. If not supplied thumbImage will be used.
 magnification | 1 | The zoom factor to be used by default. 1 means we use the fullImage at its actual resolution.
@@ -38,11 +38,11 @@ maxZoomRatio | 2 | Upper limit on how much zoom can be applied with scrollZoom e
 
 ### Zoom modes
 Mode | Description
----|---
+:---:|---
 hover | Whenever the mouse cursor moves over the thumbnail it will show the zoomed image until it leaves the thumbnail.
 click | Similar to hover but it only starts zooming if the user clicks the image. Moving the cursor away from the image disables it again.
 toggle | A click in the image will zoom at the point of the cursor. Another click will restore the small image.
-hover-freeze | First click enables hover mode, second click freezes the zoomed image where it is, third click restores thumbnail.
+<nobr>hover-freeze</nobr> | First click enables hover mode, second click freezes the zoomed image where it is, third click restores thumbnail.
 
 ### Zoom ratio
 The zoom ratio used in the *minZoomRatio* and *maxZoomRatio* settings refer to the relative size of the thumbnail
@@ -55,8 +55,8 @@ value for *maxZoomRatio* being *1* means the largest the fullSize image can appe
 
 The component outputs the follow events that can be triggered on.
 
-Event name | Description
----|---
+Event&#160;name | Description
+:---:|---
 onZoomScroll | Whenever the user changes the zoom level using the scroll wheel this event will fire with the current zoom ratio (see above).
 
 ## Installation

@@ -39,10 +39,10 @@ maxZoomRatio | 2 | Upper limit on how much zoom can be applied with scrollZoom e
 ### Zoom modes
 Mode | Description
 :---:|---
-hover | Whenever the mouse cursor moves over the thumbnail it will show the zoomed image until it leaves the thumbnail.
-click | Similar to hover but it only starts zooming if the user clicks the image. Moving the cursor away from the image disables it again.
-toggle | A click in the image will zoom at the point of the cursor. Another click will restore the small image.
-<nobr>hover-freeze</nobr> | First click enables hover mode, second click freezes the zoomed image where it is, third click restores thumbnail.
+`hover` | Whenever the mouse cursor moves over the thumbnail it will show the zoomed image until it leaves the thumbnail.
+`click` | Similar to hover but it only starts zooming if the user clicks the image. Moving the cursor away from the image disables it again.
+`toggle` | A click in the image will zoom at the point of the cursor. Another click will restore the small image.
+`hover-freeze` | First click enables hover mode, second click freezes the zoomed image where it is, third click restores thumbnail.
 
 ### Zoom ratio
 The zoom ratio used in the *minZoomRatio* and *maxZoomRatio* settings refer to the relative size of the thumbnail

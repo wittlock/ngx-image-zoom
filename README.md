@@ -28,6 +28,7 @@ fullImage | *none* | The full resolution version of the image to be used when zo
 magnification | 1 | The zoom factor to be used by default. 1 means we use the fullImage at its actual resolution.
 zoomMode | 'hover' | The mode of zooming to use, these are explained in a table below.
 enableScrollZoom | false | Boolean that toggles if the mouse wheel should be captured when hovering over the image to adjust magnification.
+scrollStepSize | 0.1 | When using scroll zoom this setting determines how big steps each scroll changes the zoom. 
 enableLens | false | If enabled only a small portion around the mouse cursor will actually magnify instead of the entire image area.
 lensWidth | 100 | Width of the lens, if enabled.
 lensHeight | 100 | Height of the lens, if enabled.

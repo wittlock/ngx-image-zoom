@@ -33,6 +33,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     public thumbHeight: number;
     public fullWidth: number;
     public fullHeight: number;
+    private scrollStepSize = 0.1;
 
     private baseRatio: number;
     private xRatio: number;
@@ -46,6 +47,11 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     private latestMouseTop: number;
 
     constructor(private renderer: Renderer2) {
+    }
+
+    @Input('scrollStepSize')
+    public set setScrollStepSize(stepSize: number) {
+        this.scrollStepSize = Number(stepSize) || this.scrollStepSize;
     }
 
     ngOnInit() {
@@ -107,10 +113,10 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
         const direction = Math.max(Math.min((event.wheelDelta || -event.detail), 1), -1);
         if (direction > 0) {
             // up
-            this.magnification = Math.min(this.magnification + 0.1, 10);
+            this.magnification = Math.min(this.magnification + this.scrollStepSize, 10);
         } else {
             // down
-            this.magnification = Math.max(this.magnification - 0.1, this.baseRatio);
+            this.magnification = Math.max(this.magnification - this.scrollStepSize, this.baseRatio);
         }
         this.calculateRatio();
         this.calculateZoomPosition(event);

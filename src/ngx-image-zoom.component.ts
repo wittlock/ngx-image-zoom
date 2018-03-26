@@ -40,6 +40,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     private circularLens = false;
 
     private baseRatio: number;
+    private minZoomRatio;
+    private maxZoomRatio = 2;
     private xRatio: number;
     private yRatio: number;
     private offsetLeft: number;
@@ -63,6 +65,17 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     @Input('magnification')
     public set setMagnification(magnification: number) {
         this.magnification = Number(magnification) || this.magnification;
+    }
+
+    @Input('minZoomRatio')
+    public set setMinZoomRatio(minZoomRatio: number) {
+        const ratio = Number(minZoomRatio) || this.minZoomRatio || this.baseRatio || 0;
+        this.minZoomRatio = Math.max(ratio, this.baseRatio || 0);
+    }
+
+    @Input('maxZoomRatio')
+    public set setMaxZoomRatio(maxZoomRatio: number) {
+        this.maxZoomRatio = Number(maxZoomRatio) || this.maxZoomRatio;
     }
 
     @Input('scrollStepSize')
@@ -154,10 +167,10 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
         const direction = Math.max(Math.min((event.wheelDelta || -event.detail), 1), -1);
         if (direction > 0) {
             // up
-            this.magnification = Math.min(this.magnification + this.scrollStepSize, 10);
+            this.magnification = Math.min(this.magnification + this.scrollStepSize, this.maxZoomRatio);
         } else {
             // down
-            this.magnification = Math.max(this.magnification - this.scrollStepSize, this.baseRatio);
+            this.magnification = Math.max(this.magnification - this.scrollStepSize, this.minZoomRatio);
         }
         this.calculateRatio();
         this.calculateZoomPosition(event);
@@ -318,6 +331,9 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
         this.baseRatio = Math.max(
             (this.thumbWidth / this.fullWidth),
             (this.thumbHeight / this.fullHeight));
+
+        // Don't allow zooming to smaller than thumbnail size
+        this.minZoomRatio = Math.max(this.minZoomRatio || 0, this.baseRatio || 0);
 
         this.calculateRatio();
     }

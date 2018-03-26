@@ -32,7 +32,9 @@ scrollStepSize | 0.1 | When using scroll zoom this setting determines how big st
 enableLens | false | If enabled only a small portion around the mouse cursor will actually magnify instead of the entire image area.
 lensWidth | 100 | Width of the lens, if enabled.
 lensHeight | 100 | Height of the lens, if enabled.
-circularLens | false | Make the lens circular instead of square. This will only look good if width and height are equal. 
+circularLens | false | Make the lens circular instead of square. This will only look good if width and height are equal.
+minZoomRatio | *baseRatio* | Lower limit on how much zoom can be applied with scrollZoom enabled. See below for details.
+maxZoomRatio | 2 | Upper limit on how much zoom can be applied with scrollZoom enabled. See below for details.
 
 ### Zoom modes
 Mode | Description
@@ -41,6 +43,13 @@ hover | Whenever the mouse cursor moves over the thumbnail it will show the zoom
 click | Similar to hover but it only starts zooming if the user clicks the image. Moving the cursor away from the image disables it again.
 toggle | A click in the image will zoom at the point of the cursor. Another click will restore the small image.
 hover-freeze | First click enables hover mode, second click freezes the zoomed image where it is, third click restores thumbnail.
+
+### Zoom ratio
+The zoom ratio used in the *minZoomRatio* and *maxZoomRatio* settings refer to the relative size of the thumbnail
+and the full size image. The *baseRatio* default value is the calculated ratio that would make the zoomed image equal
+in size to the thumbnail. For example, if the full size image is 10x larger than the thumbnail, then *minZoomRatio* will
+default to *0.1*, as in the full size image can at its smallest be shown at 0.1 times its original size. The default
+value for *maxZoomRatio* being *1* means the largest the fullSize image can appear is twice its original size. 
 
 ## Installation
 

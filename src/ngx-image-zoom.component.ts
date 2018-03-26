@@ -147,6 +147,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
                 this.lensBorderRadius = 0;
             }
         }
+        this.calculateRatioAndOffset();
         this.calculateImageAndLensPosition();
     }
 

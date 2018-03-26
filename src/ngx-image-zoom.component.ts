@@ -6,15 +6,11 @@ import { Component, ElementRef, Input, OnChanges, OnInit, Renderer2, ViewChild }
     styleUrls: ['./ngx-image-zoom.component.css']
 })
 export class NgxImageZoomComponent implements OnInit, OnChanges {
+
+    private static readonly validZoomModes: string[] = ['hover', 'toggle', 'click', 'hover-freeze'];
+
     @Input('thumbImage') thumbImage: String;
     @Input('fullImage') fullImage: String;
-    @Input('magnification') magnification = 1;
-    @Input('zoomMode') zoomMode: 'hover' | 'toggle' | 'click' | 'hover-freeze' = 'hover';
-    @Input('enableScrollZoom') enableScrollZoom = false;
-    @Input('enableLens') enableLens = false;
-    @Input('lensWidth') lensWidth = 100;
-    @Input('lensHeight') lensHeight = 100;
-    @Input('circularLens') circularLens = false;
 
     @ViewChild('zoomContainer') zoomContainer: ElementRef;
     @ViewChild('imageThumbnail') imageThumbnail: ElementRef;
@@ -27,13 +23,21 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     public magnifiedHeight: number;
     public lensTop: number;
     public lensLeft: number;
+    public enableLens = false;
     public lensBorderRadius = 0;
 
     public thumbWidth: number;
     public thumbHeight: number;
     public fullWidth: number;
     public fullHeight: number;
+    public lensWidth = 100;
+    public lensHeight = 100;
+
+    private zoomMode = 'hover';
+    private magnification = 1;
+    private enableScrollZoom = false;
     private scrollStepSize = 0.1;
+    private circularLens = false;
 
     private baseRatio: number;
     private xRatio: number;
@@ -49,9 +53,46 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     constructor(private renderer: Renderer2) {
     }
 
+    @Input('zoomMode')
+    public set setZoomMode(zoomMode: string) {
+        if (NgxImageZoomComponent.validZoomModes.some(m => m === zoomMode)) {
+            this.zoomMode = zoomMode;
+        }
+    }
+
+    @Input('magnification')
+    public set setMagnification(magnification: number) {
+        this.magnification = Number(magnification) || this.magnification;
+    }
+
     @Input('scrollStepSize')
     public set setScrollStepSize(stepSize: number) {
         this.scrollStepSize = Number(stepSize) || this.scrollStepSize;
+    }
+
+    @Input('enableLens')
+    public set setEnableLens(enable: boolean) {
+        this.enableLens = Boolean(enable);
+    }
+
+    @Input('lensWidth')
+    public set setLensWidth(width: number) {
+        this.lensWidth = Number(width) || this.lensWidth;
+    }
+
+    @Input('lensHeight')
+    public set setLensHeight(height: number) {
+        this.lensHeight = Number(height) || this.lensHeight;
+    }
+
+    @Input('circularLens')
+    public set setCircularLens(enable: boolean) {
+        this.circularLens = Boolean(enable);
+    }
+
+    @Input('enableScrollZoom')
+    public set setEnableScrollZoom(enable: boolean) {
+        this.enableScrollZoom = Boolean(enable);
     }
 
     ngOnInit() {

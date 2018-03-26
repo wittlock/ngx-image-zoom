@@ -20,19 +20,19 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     @ViewChild('imageThumbnail') imageThumbnail: ElementRef;
     @ViewChild('fullSizeImage') fullSizeImage: ElementRef;
 
-    display: string;
-    fullImageTop: number;
-    fullImageLeft: number;
-    magnifiedWidth: number;
-    magnifiedHeight: number;
-    lensTop: number;
-    lensLeft: number;
-    lensBorderRadius = 0;
+    public display: string;
+    public fullImageTop: number;
+    public fullImageLeft: number;
+    public magnifiedWidth: number;
+    public magnifiedHeight: number;
+    public lensTop: number;
+    public lensLeft: number;
+    public lensBorderRadius = 0;
 
-    thumbWidth: number;
-    thumbHeight: number;
-    fullWidth: number;
-    fullHeight: number;
+    public thumbWidth: number;
+    public thumbHeight: number;
+    public fullWidth: number;
+    public fullHeight: number;
 
     private baseRatio: number;
     private xRatio: number;
@@ -49,7 +49,6 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     }
 
     ngOnInit() {
-        // console.log('ZoomMode: ' + this.zoomMode);
         if (this.zoomMode === 'hover') {
             this.renderer.listen(this.zoomContainer.nativeElement, 'mouseenter', (event) => this.hoverMouseEnter(event));
             this.renderer.listen(this.zoomContainer.nativeElement, 'mouseleave', () => this.hoverMouseLeave());
@@ -113,7 +112,6 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
             // down
             this.magnification = Math.max(this.magnification - 0.1, this.baseRatio);
         }
-        // console.log('New magnification: ' + this.magnification);
         this.calculateRatio();
         this.calculateZoomPosition(event);
 
@@ -220,16 +218,13 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     }
 
     private calculateZoomPosition(event: MouseEvent) {
-        // console.log('event.pageX: ' + event.pageX + ' | event.pageY: ' + event.pageY);
         const left = (event.pageX - this.offsetLeft);
         const top = (event.pageY - this.offsetTop);
 
         this.latestMouseLeft = Math.max(Math.min(left, this.thumbWidth), 0);
         this.latestMouseTop = Math.max(Math.min(top, this.thumbHeight), 0);
-        // console.log('Calculated top: ' + top + ' | calculated left: ' + left);
 
         this.calculateImageAndLensPosition();
-        // console.log('New fullImageLeft: ' + this.fullImageLeft + ' | new fullImageTop: ' + this.fullImageTop);
     }
 
     private calculateImageAndLensPosition() {
@@ -247,7 +242,6 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     private calculateRatioAndOffset() {
         this.thumbWidth = this.imageThumbnail.nativeElement.naturalWidth;
         this.thumbHeight = this.imageThumbnail.nativeElement.naturalHeight;
-        // console.log('ThumbWidth: ' + this.thumbWidth + ' | ThumbHeight: ' + this.thumbHeight);
 
         // If lens is disabled, set lens size to equal thumb size and position it on top of the thumb
         if (!this.enableLens) {
@@ -267,9 +261,6 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
             this.offsetLeft += parentContainer.offsetLeft;
             parentContainer = parentContainer.offsetParent;
         }
-        // console.log('OffsetTop: ' + this.offsetTop + ' | OffsetLeft: ' + this.offsetLeft);
-        // console.log(this.imageThumbnail);
-        // console.log(this.zoomContainer);
 
         if (this.fullImage === undefined) {
             this.fullImage = this.thumbImage;
@@ -280,11 +271,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
         this.baseRatio = Math.max(
             (this.thumbWidth / this.fullWidth),
             (this.thumbHeight / this.fullHeight));
-        // console.log('Base ratio: ' + this.baseRatio);
 
         this.calculateRatio();
-
-        // console.log('xRatio: ' + this.xRatio + ' | yRatio: ' + this.yRatio);
     }
 
     private calculateRatio() {
@@ -293,8 +281,5 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
 
         this.xRatio = (this.magnifiedWidth - this.thumbWidth) / this.thumbWidth;
         this.yRatio = (this.magnifiedHeight - this.thumbHeight) / this.thumbHeight;
-
-        // console.log('fullWidth: ' + this.fullWidth + ' | magnification: ' + this.magnification + ' | magnifiedWidth: '
-        //    + this.magnifiedWidth + ' | thumbWidth: ' + this.thumbWidth + ' | xratio: ' + this.xRatio);
     }
 }

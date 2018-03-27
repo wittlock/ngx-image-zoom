@@ -11,8 +11,9 @@ Demonstration of available features available [here](https://wittlock.github.io/
 
 ## About
 
-NgxImageZoom is inspired by JQuery libraries such as [jQuery Zoom](http://www.jacklmoore.com/zoom/) and
-[elevateZoom-plus](http://igorlino.github.io/elevatezoom-plus/) but a pure Angular2 implementation of
+NgxImageZoom is inspired by [angular2-image-zoom](https://github.com/brtnshrdr/angular2-image-zoom) and 
+JQuery libraries such as [jQuery Zoom](http://www.jacklmoore.com/zoom/) and
+[elevateZoom-plus](http://igorlino.github.io/elevatezoom-plus/) but a pure Angular2+ implementation of
 similar concepts. This plugin works with both URLs to images and in-line images
 ([Data URI](https://en.wikipedia.org/wiki/Data_URI_scheme)).
 

@@ -14,9 +14,6 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
 
     private static readonly validZoomModes: string[] = ['hover', 'toggle', 'click', 'hover-freeze'];
 
-    @Input('thumbImage') thumbImage: String;
-    @Input('fullImage') fullImage: String;
-
     @ViewChild('zoomContainer') zoomContainer: ElementRef;
     @ViewChild('imageThumbnail') imageThumbnail: ElementRef;
     @ViewChild('fullSizeImage') fullSizeImage: ElementRef;
@@ -34,6 +31,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     public enableLens = false;
     public lensBorderRadius = 0;
 
+    public thumbImage: string;
+    public fullImage: string;
     public thumbWidth: number;
     public thumbHeight: number;
     public fullWidth: number;
@@ -56,11 +55,28 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     private offsetTop: number;
     private zoomingEnabled = false;
     private zoomFrozen = false;
+    private isReady = false;
+    private thumbImageLoaded = false;
+    private fullImageLoaded = false;
 
     private latestMouseLeft: number;
     private latestMouseTop: number;
 
     constructor(private renderer: Renderer2) {
+    }
+
+    @Input('thumbImage')
+    public set setThumbImage(thumbImage: string) {
+        this.thumbImageLoaded = false;
+        this.isReady = false;
+        this.thumbImage = thumbImage;
+    }
+
+    @Input('fullImage')
+    public set setFullImage(fullImage: string) {
+        this.fullImageLoaded = false;
+        this.isReady = false;
+        this.fullImage = fullImage;
     }
 
     @Input('zoomMode')
@@ -160,13 +176,22 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     /**
      * Template helper methods
      */
-    thumbImageLoaded() {
-        this.calculateRatioAndOffset();
+    onThumbImageLoaded() {
+        this.thumbImageLoaded = true;
+        this.checkImagesLoaded();
     }
 
-    fullImageLoaded() {
+    onFullImageLoaded() {
+        this.fullImageLoaded = true;
+        this.checkImagesLoaded();
+    }
+
+    private checkImagesLoaded() {
         this.calculateRatioAndOffset();
-        this.calculateImageAndLensPosition();
+        if (this.thumbImageLoaded && this.fullImageLoaded) {
+            this.calculateImageAndLensPosition();
+            this.isReady = true;
+        }
     }
 
     /**
@@ -293,9 +318,11 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
      * Private helper methods
      */
     private zoomOn(event: MouseEvent) {
-        this.calculateRatioAndOffset();
-        this.display = 'block';
-        this.calculateZoomPosition(event);
+        if (this.isReady) {
+            this.calculateRatioAndOffset();
+            this.display = 'block';
+            this.calculateZoomPosition(event);
+        }
     }
 
     private zoomOff() {
@@ -352,17 +379,20 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
         if (this.fullImage === undefined) {
             this.fullImage = this.thumbImage;
         }
-        this.fullWidth = this.fullSizeImage.nativeElement.naturalWidth;
-        this.fullHeight = this.fullSizeImage.nativeElement.naturalHeight;
 
-        this.baseRatio = Math.max(
-            (this.thumbWidth / this.fullWidth),
-            (this.thumbHeight / this.fullHeight));
+        if (this.fullImageLoaded) {
+            this.fullWidth = this.fullSizeImage.nativeElement.naturalWidth;
+            this.fullHeight = this.fullSizeImage.nativeElement.naturalHeight;
 
-        // Don't allow zooming to smaller than thumbnail size
-        this.minZoomRatio = Math.max(this.minZoomRatio || 0, this.baseRatio || 0);
+            this.baseRatio = Math.max(
+                (this.thumbWidth / this.fullWidth),
+                (this.thumbHeight / this.fullHeight));
 
-        this.calculateRatio();
+            // Don't allow zooming to smaller than thumbnail size
+            this.minZoomRatio = Math.max(this.minZoomRatio || 0, this.baseRatio || 0);
+
+            this.calculateRatio();
+        }
     }
 
     private calculateRatio() {

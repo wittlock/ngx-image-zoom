@@ -122,7 +122,7 @@ MIT
 MIT
 MIT
 
-ngx-image-zoom@0.2.0
+ngx-image-zoom@0.3.1
 MIT
 MIT
 

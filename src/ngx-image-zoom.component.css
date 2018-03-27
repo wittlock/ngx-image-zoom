@@ -16,7 +16,7 @@
     overflow: hidden;
 }
 
-.ngxImageZoomFullContainer.ngxImageZoomLensEnabled {
+.ngxImageZoomFullContainer.ngxImageZoomLensEnabled.defaultStyling {
     border: 2px solid red;
     cursor: crosshair;
 }

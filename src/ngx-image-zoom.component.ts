@@ -14,6 +14,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
 
     private static readonly validZoomModes: string[] = ['hover', 'toggle', 'click', 'hover-freeze'];
 
+    @Input('disableStyling') disableStyling = false;
+
     @ViewChild('zoomContainer') zoomContainer: ElementRef;
     @ViewChild('imageThumbnail') imageThumbnail: ElementRef;
     @ViewChild('fullSizeImage') fullSizeImage: ElementRef;

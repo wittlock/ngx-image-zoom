@@ -33,6 +33,7 @@ enableLens | false | If enabled only a small portion around the mouse cursor wil
 lensWidth | 100 | Width of the lens, if enabled.
 lensHeight | 100 | Height of the lens, if enabled.
 circularLens | false | Make the lens circular instead of square. This will only look good if width and height are equal.
+disableStyles | false | Disable the default style for the lens (border styling), makes it easier to apply your own (see below).
 minZoomRatio | *baseRatio* | Lower limit on how much zoom can be applied with scrollZoom enabled. See below for details.
 maxZoomRatio | 2 | Upper limit on how much zoom can be applied with scrollZoom enabled. See below for details.
 
@@ -59,6 +60,16 @@ Event&#160;name | Description
 :---:|---
 onZoomScroll | Whenever the user changes the zoom level using the scroll wheel this event will fire with the current zoom ratio (see above).
 onZoomPosition | When the point on where the zoom is focused changes this event emits a Coord event (interface exported from the module) with X/Y in pixels relative thumbnails top left corner. Practically whenever the user moves the mouse cursor over the image.
+
+## Styling
+There's a few css classes that can be used to manipulate the look of the module.
+
+Class | Description
+:---:|---
+ngxImageZoomFullContainer | This is the lens, if enabled. Applying a border to this class will be the frame of the lens.
+ngxImageZoomLensEnabled | This class is applied to the same element as the above one when lensMode is enabled (in case lens use is dynamic).
+ngxImageZoomContainer | This is the main container and wraps all the content.
+zoomingEnabled | This class is added to the element above when zooming is actually happening (e.g. while hover in *hover* mode).
 
 ## Installation
 

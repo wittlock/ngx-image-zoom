@@ -1,5 +1,10 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 
+export interface Coord {
+    x: number;
+    y: number;
+}
+
 @Component({
     selector: 'ngx-image-zoom',
     templateUrl: './ngx-image-zoom.component.html',
@@ -17,6 +22,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     @ViewChild('fullSizeImage') fullSizeImage: ElementRef;
 
     @Output() onZoomScroll = new EventEmitter<number>();
+    @Output() onZoomPosition = new EventEmitter<Coord>();
 
     public display: string;
     public fullImageTop: number;
@@ -164,6 +170,21 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     }
 
     /**
+     * Zoom position setters
+     */
+    private setZoomPosition(left: number, top: number) {
+        this.latestMouseLeft = Number(left) || this.latestMouseLeft;
+        this.latestMouseTop = Number(top) || this.latestMouseTop;
+
+        const c: Coord = {
+            x: this.latestMouseLeft,
+            y: this.latestMouseTop
+        };
+        this.onZoomPosition.emit(c);
+    }
+
+
+    /**
      * Mouse wheel event
      */
     private onMouseWheel(event: any) {
@@ -285,8 +306,10 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
         const left = (event.pageX - this.offsetLeft);
         const top = (event.pageY - this.offsetTop);
 
-        this.latestMouseLeft = Math.max(Math.min(left, this.thumbWidth), 0);
-        this.latestMouseTop = Math.max(Math.min(top, this.thumbHeight), 0);
+        const newLeft = Math.max(Math.min(left, this.thumbWidth), 0);
+        const newTop = Math.max(Math.min(top, this.thumbHeight), 0);
+
+        this.setZoomPosition(newLeft, newTop);
 
         this.calculateImageAndLensPosition();
     }

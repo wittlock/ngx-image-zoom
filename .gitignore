@@ -23,6 +23,7 @@ Desktop.ini
 
 # Build files
 dist/*
+.tmp/*
 
 # Playground tmp files
 .playground

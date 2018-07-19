@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 
 export interface Coord {
     x: number;
@@ -10,7 +10,7 @@ export interface Coord {
     templateUrl: './ngx-image-zoom.component.html',
     styleUrls: ['./ngx-image-zoom.component.css']
 })
-export class NgxImageZoomComponent implements OnInit, OnChanges {
+export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
 
     private static readonly validZoomModes: string[] = ['hover', 'toggle', 'click', 'hover-freeze'];
 
@@ -45,6 +45,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     private enableScrollZoom = false;
     private scrollStepSize = 0.1;
     private circularLens = false;
+    private scrollParentSelector: string;
 
     private baseRatio: number;
     private minZoomRatio;
@@ -61,6 +62,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
 
     private latestMouseLeft: number;
     private latestMouseTop: number;
+    private scrollParent: Element;
 
     constructor(private renderer: Renderer2) {
     }
@@ -133,6 +135,11 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
         this.enableScrollZoom = Boolean(enable);
     }
 
+    @Input('scrollParentSelector')
+    public set setScrollParentSelector(selector: string) {
+        this.scrollParentSelector = selector;
+    }
+
     ngOnInit() {
         if (this.zoomMode === 'hover') {
             this.renderer.listen(this.zoomContainer.nativeElement, 'mouseenter', (event) => this.hoverMouseEnter(event));
@@ -171,6 +178,10 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
         }
         this.calculateRatioAndOffset();
         this.calculateImageAndLensPosition();
+    }
+
+    ngAfterViewInit(): void {
+        this.scrollParent = document.querySelector(this.scrollParentSelector);
     }
 
     /**
@@ -330,8 +341,15 @@ export class NgxImageZoomComponent implements OnInit, OnChanges {
     }
 
     private calculateZoomPosition(event: MouseEvent) {
-        const left = (event.pageX - this.offsetLeft);
-        const top = (event.pageY - this.offsetTop);
+        let scrollLeftOffset = 0;
+        let scrollTopOffset = 0;
+        if (this.scrollParent !== null) {
+            scrollLeftOffset = this.scrollParent.scrollLeft;
+            scrollTopOffset = this.scrollParent.scrollTop;
+        }
+
+        const left = (event.pageX - this.offsetLeft + scrollLeftOffset);
+        const top = (event.pageY - this.offsetTop + scrollTopOffset);
 
         const newLeft = Math.max(Math.min(left, this.thumbWidth), 0);
         const newTop = Math.max(Math.min(top, this.thumbHeight), 0);

@@ -201,6 +201,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
         this.calculateRatioAndOffset();
         if (this.thumbImageLoaded && this.fullImageLoaded) {
             this.calculateImageAndLensPosition();
+            this.display = 'block';
             this.isReady = true;
         }
     }

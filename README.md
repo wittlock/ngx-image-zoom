@@ -37,6 +37,7 @@ circularLens | false | Make the lens circular instead of square. This will only 
 minZoomRatio | *baseRatio* | Lower limit on how much zoom can be applied with scrollZoom enabled. See below for details.
 maxZoomRatio | 2 | Upper limit on how much zoom can be applied with scrollZoom enabled. See below for details.
 scrollParentSelector | *none* | Selector of parent scrolling view as string. This avoid zoom gap with cursor when the scrolling view is not the main window. Example : '#scrolling-frame'
+imageAlt | *none* | Content for 'alt'-attributes of 'img'-tags.
 
 ### Zoom modes
 Mode | Description

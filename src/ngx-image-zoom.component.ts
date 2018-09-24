@@ -46,6 +46,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
     private scrollStepSize = 0.1;
     private circularLens = false;
     private scrollParentSelector: string;
+    private imageAlt: string;
 
     private baseRatio: number;
     private minZoomRatio;
@@ -138,6 +139,11 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
     @Input('scrollParentSelector')
     public set setScrollParentSelector(selector: string) {
         this.scrollParentSelector = selector;
+    }
+
+    @Input('imageAlt')
+    public set setImageAlt(imageAlt: string) {
+        this.imageAlt = imageAlt;
     }
 
     ngOnInit() {

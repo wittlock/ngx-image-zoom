@@ -1,0 +1,30 @@
+{
+    "name": "ngx-image-zoom",
+    "version": "0.3.1",
+    "repository": {
+        "type": "git",
+        "url": "https://www.github.com/wittlock/ngx-image-zoom"
+    },
+    "author": {
+        "name": "Mathias Wittlock",
+        "email": "1336118+wittlock@users.noreply.github.com"
+    },
+    "keywords": [
+        "angular5",
+        "angular5 component",
+        "image zoom"
+    ],
+    "license": "MIT",
+    "bugs": {
+        "url": "https://www.github.com/wittlock/ngx-image-zoom/issues"
+    },
+    "main": "ngx-image-zoom.umd.js",
+    "module": "ngx-image-zoom.js",
+    "jsnext:main": "ngx-image-zoom.js",
+    "typings": "ngx-image-zoom.d.ts",
+    "peerDependencies": {
+        "@angular/core": "^5.0.0",
+        "rxjs": "^5.1.0",
+        "zone.js": "^0.8.4"
+    }
+}

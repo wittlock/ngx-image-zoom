@@ -23,6 +23,7 @@ Desktop.ini
 
 # Build files
 dist/*
+!dist/package.json
 .tmp/*
 
 # Playground tmp files

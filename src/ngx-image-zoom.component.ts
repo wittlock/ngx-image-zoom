@@ -64,7 +64,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
     private latestMouseTop: number;
     private scrollParent: Element;
 
-    constructor(private renderer: Renderer2) {
+    constructor(private renderer: Renderer2, private elRef: ElementRef) {
     }
 
     @Input('thumbImage')
@@ -181,7 +181,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this.scrollParent = document.querySelector(this.scrollParentSelector);
+        this.scrollParent = this.elRef.nativeElement.parentElement;
     }
 
     /**

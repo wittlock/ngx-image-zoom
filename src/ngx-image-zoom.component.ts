@@ -45,7 +45,6 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
     private enableScrollZoom = false;
     private scrollStepSize = 0.1;
     private circularLens = false;
-    private scrollParentSelector: string;
 
     private baseRatio: number;
     private minZoomRatio;
@@ -134,11 +133,6 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
     @Input('enableScrollZoom')
     public set setEnableScrollZoom(enable: boolean) {
         this.enableScrollZoom = Boolean(enable);
-    }
-
-    @Input('scrollParentSelector')
-    public set setScrollParentSelector(selector: string) {
-        this.scrollParentSelector = selector;
     }
 
     @Input('isInsideStaticContainer')

@@ -65,7 +65,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
     private scrollParent: Element;
     private isInsideStaticContainer = false;
 
-    constructor(private renderer: Renderer2) {
+    constructor(private renderer: Renderer2, private elRef: ElementRef) {
     }
 
     @Input('thumbImage')
@@ -187,7 +187,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     ngAfterViewInit(): void {
-        this.scrollParent = document.querySelector(this.scrollParentSelector);
+        this.scrollParent = this.elRef.nativeElement.parentElement;
     }
 
     /**

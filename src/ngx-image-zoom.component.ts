@@ -12,7 +12,7 @@ export interface Coord {
 })
 export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
 
-    private static readonly validZoomModes: string[] = ['hover', 'toggle', 'click', 'hover-freeze'];
+    private static readonly validZoomModes: string[] = ['hover', 'toggle', 'click', 'hover-freeze', 'click-hover'];
 
     @ViewChild('zoomContainer') zoomContainer: ElementRef;
     @ViewChild('imageThumbnail') imageThumbnail: ElementRef;
@@ -156,6 +156,10 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
             this.renderer.listen(this.zoomContainer.nativeElement, 'mouseleave', () => this.hoverFreezeMouseLeave());
             this.renderer.listen(this.zoomContainer.nativeElement, 'mousemove', (event) => this.hoverFreezeMouseMove(event));
             this.renderer.listen(this.zoomContainer.nativeElement, 'click', (event) => this.hoverFreezeClick(event));
+        } else if (this.zoomMode === 'click-hover') {
+            this.renderer.listen(this.zoomContainer.nativeElement, 'click', (event) => this.toggleClick(event));
+            this.renderer.listen(this.zoomContainer.nativeElement, 'mouseleave', () => this.clickMouseLeave());
+            this.renderer.listen(this.zoomContainer.nativeElement, 'mousemove', (event) => this.clickMouseMove(event));
         }
         if (this.enableScrollZoom) {
             // Chrome: 'mousewheel', Firefox: 'DOMMouseScroll', IE: 'onmousewheel'

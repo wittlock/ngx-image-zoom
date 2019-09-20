@@ -36,6 +36,7 @@ lensHeight | 100 | Height of the lens, if enabled.
 circularLens | false | Make the lens circular instead of square. This will only look good if width and height are equal.
 minZoomRatio | *baseRatio* | Lower limit on how much zoom can be applied with scrollZoom enabled. See below for details.
 maxZoomRatio | 2 | Upper limit on how much zoom can be applied with scrollZoom enabled. See below for details.
+scrollParentSelector | *none* | Selector of parent scrolling view as string. This avoid zoom gap with cursor when the scrolling view is not the main window. Example : '#scrolling-frame'
 isInsideStaticContainer | false | Set to `true` if the thumbnail is inside a container, to which `position: static` is applied (e.g. a modal window). This is required to avoid zoom position being calculated incorrectly.
 
 ### Zoom modes

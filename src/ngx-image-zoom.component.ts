@@ -224,6 +224,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
      * Mouse wheel event
      */
     private onMouseWheel(event: any) {
+        if(!this.zoomingEnabled) return;
+        
         event = window.event || event; // old IE
         const direction = Math.max(Math.min((event.wheelDelta || -event.detail), 1), -1);
         if (direction > 0) {

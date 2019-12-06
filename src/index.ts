@@ -16,7 +16,7 @@ export * from './ngx-image-zoom.component';
     ]
 })
 export class NgxImageZoomModule {
-    static forRoot(): ModuleWithProviders {
+    static forRoot(): ModuleWithProviders<NgxImageZoomModule> {
         return {
             ngModule: NgxImageZoomModule,
         };

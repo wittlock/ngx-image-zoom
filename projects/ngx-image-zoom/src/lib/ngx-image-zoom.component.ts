@@ -14,9 +14,9 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
 
     private static readonly validZoomModes: string[] = ['hover', 'toggle', 'click', 'hover-freeze'];
 
-    @ViewChild('zoomContainer') zoomContainer: ElementRef;
-    @ViewChild('imageThumbnail') imageThumbnail: ElementRef;
-    @ViewChild('fullSizeImage') fullSizeImage: ElementRef;
+    @ViewChild('zoomContainer', {static: false}) zoomContainer !: ElementRef;
+    @ViewChild('imageThumbnail', {static: false}) imageThumbnail !: ElementRef;
+    @ViewChild('fullSizeImage', {static: false}) fullSizeImage !: ElementRef;
 
     @Output() onZoomScroll = new EventEmitter<number>();
     @Output() onZoomPosition = new EventEmitter<Coord>();
@@ -63,6 +63,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
     private latestMouseTop: number;
     private scrollParent: Element;
     private isInsideStaticContainer = false;
+    private viewInitDone = false;
 
     constructor(private renderer: Renderer2, private elRef: ElementRef) {
     }
@@ -141,6 +142,23 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     ngOnInit() {
+
+    }
+
+    ngOnChanges() {
+        if (this.enableLens) {
+            if (this.circularLens) {
+                this.lensBorderRadius = this.lensWidth / 2;
+            } else {
+                this.lensBorderRadius = 0;
+            }
+        }
+        this.calculateRatioAndOffset();
+        this.calculateImageAndLensPosition();
+    }
+
+    ngAfterViewInit(): void {
+        this.scrollParent = this.elRef.nativeElement.parentElement;
         if (this.zoomMode === 'hover') {
             this.renderer.listen(this.zoomContainer.nativeElement, 'mouseenter', (event) => this.hoverMouseEnter(event));
             this.renderer.listen(this.zoomContainer.nativeElement, 'mouseleave', () => this.hoverMouseLeave());
@@ -166,22 +184,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
         if (this.enableLens && this.circularLens) {
             this.lensBorderRadius = this.lensWidth / 2;
         }
-    }
-
-    ngOnChanges() {
-        if (this.enableLens) {
-            if (this.circularLens) {
-                this.lensBorderRadius = this.lensWidth / 2;
-            } else {
-                this.lensBorderRadius = 0;
-            }
-        }
-        this.calculateRatioAndOffset();
-        this.calculateImageAndLensPosition();
-    }
-
-    ngAfterViewInit(): void {
-        this.scrollParent = this.elRef.nativeElement.parentElement;
+        this.viewInitDone = true;
     }
 
     /**
@@ -364,7 +367,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     private calculateImageAndLensPosition() {
-        let lensLeftMod = 0, lensTopMod = 0;
+        let lensLeftMod = 0;
+        let lensTopMod = 0;
 
         if (this.enableLens) {
             lensLeftMod = this.lensLeft = this.latestMouseLeft - this.lensWidth / 2;
@@ -376,44 +380,46 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     private calculateRatioAndOffset() {
-        this.thumbWidth = this.imageThumbnail.nativeElement.width;
-        this.thumbHeight = this.imageThumbnail.nativeElement.height;
+        if (this.viewInitDone) {
+            this.thumbWidth = this.imageThumbnail.nativeElement.width;
+            this.thumbHeight = this.imageThumbnail.nativeElement.height;
 
-        // If lens is disabled, set lens size to equal thumb size and position it on top of the thumb
-        if (!this.enableLens) {
-            this.lensWidth = this.thumbWidth;
-            this.lensHeight = this.thumbHeight;
-            this.lensLeft = 0;
-            this.lensTop = 0;
-        }
+            // If lens is disabled, set lens size to equal thumb size and position it on top of the thumb
+            if (!this.enableLens) {
+                this.lensWidth = this.thumbWidth;
+                this.lensHeight = this.thumbHeight;
+                this.lensLeft = 0;
+                this.lensTop = 0;
+            }
 
-        // getBoundingClientRect() ? https://stackoverflow.com/a/44008873
-        this.offsetTop = this.zoomContainer.nativeElement.offsetTop;
-        this.offsetLeft = this.zoomContainer.nativeElement.offsetLeft;
-        // If we have an offsetParent, we need to add its offset too and recurse until we can't find more offsetParents.
-        let parentContainer = this.zoomContainer.nativeElement.offsetParent;
-        while (parentContainer != null) {
-            this.offsetTop += parentContainer.offsetTop;
-            this.offsetLeft += parentContainer.offsetLeft;
-            parentContainer = parentContainer.offsetParent;
-        }
+            // getBoundingClientRect() ? https://stackoverflow.com/a/44008873
+            this.offsetTop = this.zoomContainer.nativeElement.offsetTop;
+            this.offsetLeft = this.zoomContainer.nativeElement.offsetLeft;
+            // If we have an offsetParent, we need to add its offset too and recurse until we can't find more offsetParents.
+            let parentContainer = this.zoomContainer.nativeElement.offsetParent;
+            while (parentContainer != null) {
+                this.offsetTop += parentContainer.offsetTop;
+                this.offsetLeft += parentContainer.offsetLeft;
+                parentContainer = parentContainer.offsetParent;
+            }
 
-        if (this.fullImage === undefined) {
-            this.fullImage = this.thumbImage;
-        }
+            if (this.fullImage === undefined) {
+                this.fullImage = this.thumbImage;
+            }
 
-        if (this.fullImageLoaded) {
-            this.fullWidth = this.fullSizeImage.nativeElement.naturalWidth;
-            this.fullHeight = this.fullSizeImage.nativeElement.naturalHeight;
+            if (this.fullImageLoaded) {
+                this.fullWidth = this.fullSizeImage.nativeElement.naturalWidth;
+                this.fullHeight = this.fullSizeImage.nativeElement.naturalHeight;
 
-            this.baseRatio = Math.max(
-                (this.thumbWidth / this.fullWidth),
-                (this.thumbHeight / this.fullHeight));
+                this.baseRatio = Math.max(
+                    (this.thumbWidth / this.fullWidth),
+                    (this.thumbHeight / this.fullHeight));
 
-            // Don't allow zooming to smaller than thumbnail size
-            this.minZoomRatio = Math.max(this.minZoomRatio || 0, this.baseRatio || 0);
+                // Don't allow zooming to smaller than thumbnail size
+                this.minZoomRatio = Math.max(this.minZoomRatio || 0, this.baseRatio || 0);
 
-            this.calculateRatio();
+                this.calculateRatio();
+            }
         }
     }
 

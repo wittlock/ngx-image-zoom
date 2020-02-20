@@ -61,8 +61,8 @@ The component outputs the follow events that can be triggered on.
 
 Event&#160;name | Description
 :---:|---
-onZoomScroll | Whenever the user changes the zoom level using the scroll wheel this event will fire with the current zoom ratio (see above).
-onZoomPosition | When the point on where the zoom is focused changes this event emits a Coord event (interface exported from the module) with X/Y in pixels relative thumbnails top left corner. Practically whenever the user moves the mouse cursor over the image.
+zoomScroll | Whenever the user changes the zoom level using the scroll wheel this event will fire with the current zoom ratio (see above).
+zoomPosition | When the point on where the zoom is focused changes this event emits a Coord event (interface exported from the module) with X/Y in pixels relative thumbnails top left corner. Practically whenever the user moves the mouse cursor over the image.
 
 ## Installation
 
@@ -106,10 +106,10 @@ Once the library is imported, you can use its component in your Angular applicat
 <h1>
   {{title}}
 </h1>
-<ngx-image-zoom
+<lib-ngx-image-zoom
     [thumbImage]=myThumbnail
     [fullImage]=myFullresImage
-></ngx-image-zoom>
+></lib-ngx-image-zoom>
 ```
 
 ## License

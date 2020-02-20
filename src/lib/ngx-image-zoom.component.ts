@@ -240,7 +240,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
      */
     private onMouseWheel(event: any) {
         // Don't eat events if zooming isn't active
-        if (!this.zoomingEnabled) {
+        if (!this.zoomingEnabled || this.zoomFrozen) {
             return;
         }
 
@@ -287,7 +287,6 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
         } else {
             this.zoomOn(event);
         }
-        this.zoomingEnabled = !this.zoomingEnabled;
     }
 
     /**
@@ -295,14 +294,12 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
      */
     private clickStarter(event: MouseEvent) {
         if (this.zoomingEnabled === false) {
-            this.zoomingEnabled = true;
             this.zoomOn(event);
         }
     }
 
     private clickMouseLeave() {
         this.zoomOff();
-        this.zoomingEnabled = false;
     }
 
     private clickMouseMove(event: MouseEvent) {
@@ -334,13 +331,11 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
 
     private hoverFreezeClick(event: MouseEvent) {
         if (this.zoomingEnabled && this.zoomFrozen) {
-            this.zoomingEnabled = false;
             this.zoomFrozen = false;
             this.zoomOff();
         } else if (this.zoomingEnabled) {
             this.zoomFrozen = true;
         } else {
-            this.zoomingEnabled = true;
             this.zoomOn(event);
         }
     }
@@ -350,6 +345,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
      */
     private zoomOn(event: MouseEvent) {
         if (this.isReady) {
+            this.zoomingEnabled = true;
             this.calculateRatioAndOffset();
             this.display = 'block';
             this.calculateZoomPosition(event);
@@ -357,6 +353,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
     }
 
     private zoomOff() {
+        this.zoomingEnabled = false;
         this.display = 'none';
     }
 

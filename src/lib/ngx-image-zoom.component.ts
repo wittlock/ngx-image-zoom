@@ -5,6 +5,7 @@ import {
     EventEmitter,
     Input,
     OnChanges,
+    OnInit,
     Output,
     Renderer2,
     ViewChild
@@ -20,13 +21,13 @@ export interface Coord {
     templateUrl: './ngx-image-zoom.component.html',
     styleUrls: ['./ngx-image-zoom.component.css']
 })
-export class NgxImageZoomComponent implements OnChanges, AfterViewInit {
+export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
 
     private static readonly validZoomModes: string[] = ['hover', 'toggle', 'click', 'hover-freeze'];
 
-    @ViewChild('zoomContainer', {static: false}) zoomContainer !: ElementRef;
-    @ViewChild('imageThumbnail', {static: false}) imageThumbnail !: ElementRef;
-    @ViewChild('fullSizeImage', {static: false}) fullSizeImage !: ElementRef;
+    @ViewChild('zoomContainer', {static: true}) zoomContainer !: ElementRef;
+    @ViewChild('imageThumbnail', {static: true}) imageThumbnail !: ElementRef;
+    @ViewChild('fullSizeImage', {static: true}) fullSizeImage !: ElementRef;
 
     @Output() zoomScroll = new EventEmitter<number>();
     @Output() zoomPosition = new EventEmitter<Coord>();
@@ -73,7 +74,6 @@ export class NgxImageZoomComponent implements OnChanges, AfterViewInit {
     private latestMouseTop: number;
     private scrollParent: Element;
     private isInsideStaticContainer = false;
-    private viewInitDone = false;
 
     constructor(private renderer: Renderer2, private elRef: ElementRef) {
     }
@@ -151,6 +151,10 @@ export class NgxImageZoomComponent implements OnChanges, AfterViewInit {
         this.isInsideStaticContainer = isInStatic;
     }
 
+    ngOnInit(): void {
+        this.setUpEventListeners();
+    }
+
     ngOnChanges() {
         if (this.enableLens) {
             if (this.circularLens) {
@@ -165,8 +169,6 @@ export class NgxImageZoomComponent implements OnChanges, AfterViewInit {
 
     ngAfterViewInit(): void {
         this.scrollParent = this.elRef.nativeElement.parentElement;
-        this.setUpEventListeners();
-        this.viewInitDone = true;
     }
 
     /**
@@ -390,46 +392,44 @@ export class NgxImageZoomComponent implements OnChanges, AfterViewInit {
     }
 
     private calculateRatioAndOffset() {
-        if (this.viewInitDone) {
-            this.thumbWidth = this.imageThumbnail.nativeElement.width;
-            this.thumbHeight = this.imageThumbnail.nativeElement.height;
+        this.thumbWidth = this.imageThumbnail.nativeElement.width;
+        this.thumbHeight = this.imageThumbnail.nativeElement.height;
 
-            // If lens is disabled, set lens size to equal thumb size and position it on top of the thumb
-            if (!this.enableLens) {
-                this.lensWidth = this.thumbWidth;
-                this.lensHeight = this.thumbHeight;
-                this.lensLeft = 0;
-                this.lensTop = 0;
-            }
+        // If lens is disabled, set lens size to equal thumb size and position it on top of the thumb
+        if (!this.enableLens) {
+            this.lensWidth = this.thumbWidth;
+            this.lensHeight = this.thumbHeight;
+            this.lensLeft = 0;
+            this.lensTop = 0;
+        }
 
-            // getBoundingClientRect() ? https://stackoverflow.com/a/44008873
-            this.offsetTop = this.zoomContainer.nativeElement.offsetTop;
-            this.offsetLeft = this.zoomContainer.nativeElement.offsetLeft;
-            // If we have an offsetParent, we need to add its offset too and recurse until we can't find more offsetParents.
-            let parentContainer = this.zoomContainer.nativeElement.offsetParent;
-            while (parentContainer != null) {
-                this.offsetTop += parentContainer.offsetTop;
-                this.offsetLeft += parentContainer.offsetLeft;
-                parentContainer = parentContainer.offsetParent;
-            }
+        // getBoundingClientRect() ? https://stackoverflow.com/a/44008873
+        this.offsetTop = this.zoomContainer.nativeElement.offsetTop;
+        this.offsetLeft = this.zoomContainer.nativeElement.offsetLeft;
+        // If we have an offsetParent, we need to add its offset too and recurse until we can't find more offsetParents.
+        let parentContainer = this.zoomContainer.nativeElement.offsetParent;
+        while (parentContainer != null) {
+            this.offsetTop += parentContainer.offsetTop;
+            this.offsetLeft += parentContainer.offsetLeft;
+            parentContainer = parentContainer.offsetParent;
+        }
 
-            if (this.fullImage === undefined) {
-                this.fullImage = this.thumbImage;
-            }
+        if (this.fullImage === undefined) {
+            this.fullImage = this.thumbImage;
+        }
 
-            if (this.fullImageLoaded) {
-                this.fullWidth = this.fullSizeImage.nativeElement.naturalWidth;
-                this.fullHeight = this.fullSizeImage.nativeElement.naturalHeight;
+        if (this.fullImageLoaded) {
+            this.fullWidth = this.fullSizeImage.nativeElement.naturalWidth;
+            this.fullHeight = this.fullSizeImage.nativeElement.naturalHeight;
 
-                this.baseRatio = Math.max(
-                    (this.thumbWidth / this.fullWidth),
-                    (this.thumbHeight / this.fullHeight));
+            this.baseRatio = Math.max(
+                (this.thumbWidth / this.fullWidth),
+                (this.thumbHeight / this.fullHeight));
 
-                // Don't allow zooming to smaller than thumbnail size
-                this.minZoomRatio = Math.max(this.minZoomRatio || 0, this.baseRatio || 0);
+            // Don't allow zooming to smaller than thumbnail size
+            this.minZoomRatio = Math.max(this.minZoomRatio || 0, this.baseRatio || 0);
 
-                this.calculateRatio();
-            }
+            this.calculateRatio();
         }
     }
 

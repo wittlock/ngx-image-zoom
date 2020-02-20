@@ -1,41 +1,54 @@
 {
     "name": "ngx-image-zoom",
-    "version": "0.0.0",
+    "version": "0.5.0",
     "scripts": {
         "build": "ng build ngx-image-zoom",
         "build:release": "ng build ngx-image-zoom --prod",
         "build:watch": "ng build ngx-image-zoom --watch",
-        "copy:changes": "copy CHANGELOG.md dist\\ngx-image-zoom\\",
-        "copy:files": "npm run copy:readme && npm run copy:changes",
-        "copy:readme": "copy README.md dist\\ngx-image-zoom\\",
         "ng": "ng",
         "lint": "ng lint",
-        "prep:release": "npm run build:release && npm run copy:files",
-        "release": "npm run prep:release && npm publish dist/ngx-image-zoom/",
-        "release:beta": "npm run prep:release && npm publish dist/ngx-image-zoom/ --tag beta",
+        "release": "npm run build:release && npm publish dist/",
+        "release:beta": "npm run build:release && npm publish dist/ --tag beta",
         "start": "ng serve",
         "test": "ng test"
     },
-    "private": true,
-    "dependencies": {
-        "@angular/animations": "~9.0.1",
-        "@angular/common": "~9.0.1",
-        "@angular/compiler": "~9.0.1",
-        "@angular/core": "~9.0.1",
-        "@angular/forms": "~9.0.1",
-        "@angular/platform-browser": "~9.0.1",
-        "@angular/platform-browser-dynamic": "~9.0.1",
-        "@angular/router": "~9.0.1",
-        "rxjs": "~6.5.4",
-        "tslib": "^1.10.0",
-        "zone.js": "~0.10.2"
+    "repository": {
+        "type": "git",
+        "url": "https://www.github.com/wittlock/ngx-image-zoom"
     },
+    "author": {
+        "name": "Mathias Wittlock",
+        "email": "1336118+wittlock@users.noreply.github.com"
+    },
+    "keywords": [
+        "angular",
+        "angular component",
+        "image zoom"
+    ],
+    "license": "MIT",
+    "bugs": {
+        "url": "https://www.github.com/wittlock/ngx-image-zoom/issues"
+    },
+    "peerDependencies": {
+        "@angular/common": "^9.0.1",
+        "@angular/core": "^9.0.1",
+        "tslib": "^1.10.0"
+    },
+    "dependencies": {},
     "devDependencies": {
         "@angular-devkit/build-angular": "~0.900.2",
         "@angular-devkit/build-ng-packagr": "~0.900.2",
+        "@angular/animations": "~9.0.1",
         "@angular/cli": "~9.0.2",
+        "@angular/common": "~9.0.1",
+        "@angular/compiler": "~9.0.1",
         "@angular/compiler-cli": "~9.0.1",
+        "@angular/core": "~9.0.1",
+        "@angular/forms": "~9.0.1",
         "@angular/language-service": "~9.0.1",
+        "@angular/platform-browser": "~9.0.1",
+        "@angular/platform-browser-dynamic": "~9.0.1",
+        "@angular/router": "~9.0.1",
         "@types/node": "^12.11.1",
         "@types/jasmine": "~3.5.0",
         "@types/jasminewd2": "~2.0.3",
@@ -49,8 +62,11 @@
         "karma-jasmine-html-reporter": "^1.4.2",
         "ng-packagr": "^9.0.0",
         "protractor": "~5.4.3",
+        "rxjs": "~6.5.4",
         "ts-node": "~8.3.0",
+        "tslib": "^1.10.0",
         "tslint": "~5.18.0",
-        "typescript": "~3.7.5"
+        "typescript": "~3.7.5",
+        "zone.js": "~0.10.2"
     }
 }

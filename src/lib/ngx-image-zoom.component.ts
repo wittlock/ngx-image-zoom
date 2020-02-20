@@ -1,4 +1,14 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import {
+    AfterViewInit,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    Renderer2,
+    ViewChild
+} from '@angular/core';
 
 export interface Coord {
     x: number;
@@ -10,7 +20,7 @@ export interface Coord {
     templateUrl: './ngx-image-zoom.component.html',
     styleUrls: ['./ngx-image-zoom.component.css']
 })
-export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
+export class NgxImageZoomComponent implements OnChanges, AfterViewInit {
 
     private static readonly validZoomModes: string[] = ['hover', 'toggle', 'click', 'hover-freeze'];
 
@@ -141,10 +151,6 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
         this.isInsideStaticContainer = isInStatic;
     }
 
-    ngOnInit() {
-
-    }
-
     ngOnChanges() {
         if (this.enableLens) {
             if (this.circularLens) {
@@ -159,6 +165,24 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
 
     ngAfterViewInit(): void {
         this.scrollParent = this.elRef.nativeElement.parentElement;
+        this.setUpEventListeners();
+        this.viewInitDone = true;
+    }
+
+    /**
+     * Template helper methods
+     */
+    onThumbImageLoaded() {
+        this.thumbImageLoaded = true;
+        this.checkImagesLoaded();
+    }
+
+    onFullImageLoaded() {
+        this.fullImageLoaded = true;
+        this.checkImagesLoaded();
+    }
+
+    private setUpEventListeners() {
         if (this.zoomMode === 'hover') {
             this.renderer.listen(this.zoomContainer.nativeElement, 'mouseenter', (event) => this.hoverMouseEnter(event));
             this.renderer.listen(this.zoomContainer.nativeElement, 'mouseleave', () => this.hoverMouseLeave());
@@ -184,20 +208,6 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
         if (this.enableLens && this.circularLens) {
             this.lensBorderRadius = this.lensWidth / 2;
         }
-        this.viewInitDone = true;
-    }
-
-    /**
-     * Template helper methods
-     */
-    onThumbImageLoaded() {
-        this.thumbImageLoaded = true;
-        this.checkImagesLoaded();
-    }
-
-    onFullImageLoaded() {
-        this.fullImageLoaded = true;
-        this.checkImagesLoaded();
     }
 
     private checkImagesLoaded() {

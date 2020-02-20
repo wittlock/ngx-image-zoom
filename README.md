@@ -4,6 +4,8 @@
 
 ## Project status
 
+**Breaking changes** in version 0.5.0, see [changelog](CHANGELOG.md) for details.
+
 Still in early development, more features are planned and incoming. Should be in a working 
 state right now but it's not tested in lots of different setups yet.
 
@@ -89,7 +91,7 @@ import { NgxImageZoomModule } from 'ngx-image-zoom';
   ],
   imports: [
     BrowserModule,
-    NgxImageZoomModule.forRoot() // <-- Add this line
+    NgxImageZoomModule // <-- Add this line
   ],
   providers: [],
   bootstrap: [AppComponent]

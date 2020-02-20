@@ -6,7 +6,7 @@ export interface Coord {
 }
 
 @Component({
-    selector: 'ngx-image-zoom',
+    selector: 'lib-ngx-image-zoom',
     templateUrl: './ngx-image-zoom.component.html',
     styleUrls: ['./ngx-image-zoom.component.css']
 })
@@ -18,8 +18,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
     @ViewChild('imageThumbnail', {static: false}) imageThumbnail !: ElementRef;
     @ViewChild('fullSizeImage', {static: false}) fullSizeImage !: ElementRef;
 
-    @Output() onZoomScroll = new EventEmitter<number>();
-    @Output() onZoomPosition = new EventEmitter<Coord>();
+    @Output() zoomScroll = new EventEmitter<number>();
+    @Output() zoomPosition = new EventEmitter<Coord>();
 
     public display: string;
     public fullImageTop: number;
@@ -92,7 +92,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
     @Input('magnification')
     public set setMagnification(magnification: number) {
         this.magnification = Number(magnification) || this.magnification;
-        this.onZoomScroll.emit(this.magnification);
+        this.zoomScroll.emit(this.magnification);
     }
 
     @Input('minZoomRatio')
@@ -219,7 +219,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit {
             x: this.latestMouseLeft,
             y: this.latestMouseTop
         };
-        this.onZoomPosition.emit(c);
+        this.zoomPosition.emit(c);
     }
 
 

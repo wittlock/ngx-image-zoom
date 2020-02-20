@@ -11,6 +11,7 @@
 ### Features
 * Completely redid the library wrapping for Angular 9 support.
 * Library is now in Angular Package Format for better compatibility.
+* Added a new input scrollParentSelector to further control zooming in complex layouts.
 
 ### Bugfixes
 * Clean up event listeners when component is destroyed.

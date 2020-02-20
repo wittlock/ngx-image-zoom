@@ -62,6 +62,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, 
     private latestMouseLeft: number;
     private latestMouseTop: number;
     private scrollParent: Element;
+    private scrollParentSelector: string;
     private isInsideStaticContainer = false;
 
     private eventListeners: (() => void)[] = [];
@@ -137,6 +138,11 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, 
         this.enableScrollZoom = Boolean(enable);
     }
 
+    @Input('scrollParentSelector')
+    public set setScrollParentSelector(selector: string) {
+        this.scrollParentSelector = selector;
+    }
+
     @Input('isInsideStaticContainer')
     public set setisInsideStaticContainer(isInStatic: boolean) {
         this.isInsideStaticContainer = isInStatic;
@@ -159,7 +165,9 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, 
     }
 
     ngAfterViewInit(): void {
-        this.scrollParent = this.elRef.nativeElement.parentElement;
+        this.scrollParent = this.scrollParentSelector ?
+            document.querySelector(this.scrollParentSelector) :
+            this.elRef.nativeElement.parentElement;
     }
 
     ngOnDestroy(): void {

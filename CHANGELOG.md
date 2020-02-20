@@ -13,4 +13,4 @@
 * Library is now in Angular Package Format for better compatibility.
 
 ### Bugfixes
-* ...
+* Clean up event listeners when component is destroyed.

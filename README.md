@@ -4,7 +4,9 @@
 
 ## Project status
 
-**Breaking changes** in version 0.5.0, see [changelog](CHANGELOG.md) for details.
+**Breaking changes** in version 0.5.0, see [changelog](CHANGELOG.md) for details. This version is only tested
+with Angular9, I'll try to test and make compatible with a few versions back too for a later version. As far
+as I can tell 0.5.0 is Ivy compatible too.
 
 Still in early development, more features are planned and incoming. Should be in a working 
 state right now but it's not tested in lots of different setups yet.

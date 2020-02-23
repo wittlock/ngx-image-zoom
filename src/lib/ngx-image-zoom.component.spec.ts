@@ -1,6 +1,4 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-import {} from 'jasmine';
-
 import { NgxImageZoomComponent } from './ngx-image-zoom.component';
 
 describe('NgxImageZoomComponent', () => {

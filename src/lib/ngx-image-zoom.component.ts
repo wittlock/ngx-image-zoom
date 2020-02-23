@@ -1,16 +1,4 @@
-import {
-    AfterViewInit,
-    Component,
-    ElementRef,
-    EventEmitter,
-    Input,
-    OnChanges,
-    OnDestroy,
-    OnInit,
-    Output,
-    Renderer2,
-    ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 
 export interface Coord {
     x: number;
@@ -18,7 +6,7 @@ export interface Coord {
 }
 
 @Component({
-    selector: 'ngx-image-zoom',
+    selector: 'lib-ngx-image-zoom',
     templateUrl: './ngx-image-zoom.component.html',
     styleUrls: ['./ngx-image-zoom.component.css']
 })
@@ -26,12 +14,12 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, 
 
     private static readonly validZoomModes: string[] = ['hover', 'toggle', 'click', 'hover-freeze'];
 
-    @ViewChild('zoomContainer') zoomContainer: ElementRef;
-    @ViewChild('imageThumbnail') imageThumbnail: ElementRef;
-    @ViewChild('fullSizeImage') fullSizeImage: ElementRef;
+    @ViewChild('zoomContainer', {static: true}) zoomContainer !: ElementRef;
+    @ViewChild('imageThumbnail', {static: true}) imageThumbnail !: ElementRef;
+    @ViewChild('fullSizeImage', {static: true}) fullSizeImage !: ElementRef;
 
-    @Output() onZoomScroll = new EventEmitter<number>();
-    @Output() onZoomPosition = new EventEmitter<Coord>();
+    @Output() zoomScroll = new EventEmitter<number>();
+    @Output() zoomPosition = new EventEmitter<Coord>();
 
     public display: string;
     public fullImageTop: number;
@@ -57,7 +45,6 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, 
     private enableScrollZoom = false;
     private scrollStepSize = 0.1;
     private circularLens = false;
-    private scrollParentSelector: string;
 
     private baseRatio: number;
     private minZoomRatio;
@@ -75,6 +62,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, 
     private latestMouseLeft: number;
     private latestMouseTop: number;
     private scrollParent: Element;
+    private scrollParentSelector: string;
     private isInsideStaticContainer = false;
 
     private eventListeners: (() => void)[] = [];
@@ -106,7 +94,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, 
     @Input('magnification')
     public set setMagnification(magnification: number) {
         this.magnification = Number(magnification) || this.magnification;
-        this.onZoomScroll.emit(this.magnification);
+        this.zoomScroll.emit(this.magnification);
     }
 
     @Input('minZoomRatio')
@@ -160,36 +148,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, 
         this.isInsideStaticContainer = isInStatic;
     }
 
-    ngOnInit() {
-        if (this.zoomMode === 'hover') {
-            this.eventListeners.push(this.renderer.listen(this.zoomContainer.nativeElement, 'mouseenter', (event) => this.hoverMouseEnter(event)));
-            this.eventListeners.push(this.renderer.listen(this.zoomContainer.nativeElement, 'mouseleave', () => this.hoverMouseLeave()));
-            this.eventListeners.push(this.renderer.listen(this.zoomContainer.nativeElement, 'mousemove', (event) => this.hoverMouseMove(event)));
-        } else if (this.zoomMode === 'toggle') {
-            this.eventListeners.push(this.renderer.listen(this.zoomContainer.nativeElement, 'click', (event) => this.toggleClick(event)));
-        } else if (this.zoomMode === 'click') {
-            this.eventListeners.push(this.renderer.listen(this.zoomContainer.nativeElement, 'click', (event) => this.clickStarter(event)));
-            this.eventListeners.push(this.renderer.listen(this.zoomContainer.nativeElement, 'mouseleave', () => this.clickMouseLeave()));
-            this.eventListeners.push(this.renderer.listen(this.zoomContainer.nativeElement, 'mousemove', (event) => this.clickMouseMove(event)));
-        } else if (this.zoomMode === 'hover-freeze') {
-            this.eventListeners.push(this.renderer.listen(this.zoomContainer.nativeElement, 'mouseenter', (event) => this.hoverFreezeMouseEnter(event)));
-            this.eventListeners.push(this.renderer.listen(this.zoomContainer.nativeElement, 'mouseleave', () => this.hoverFreezeMouseLeave()));
-            this.eventListeners.push(this.renderer.listen(this.zoomContainer.nativeElement, 'mousemove', (event) => this.hoverFreezeMouseMove(event)));
-            this.eventListeners.push(this.renderer.listen(this.zoomContainer.nativeElement, 'click', (event) => this.hoverFreezeClick(event)));
-        }
-        if (this.enableScrollZoom) {
-            // Chrome: 'mousewheel', Firefox: 'DOMMouseScroll', IE: 'onmousewheel'
-            this.eventListeners.push(this.renderer.listen(this.zoomContainer.nativeElement, 'mousewheel', (event) => this.onMouseWheel(event)));
-            this.eventListeners.push(this.renderer.listen(this.zoomContainer.nativeElement, 'DOMMouseScroll', (event) => this.onMouseWheel(event)));
-            this.eventListeners.push(this.renderer.listen(this.zoomContainer.nativeElement, 'onmousewheel', (event) => this.onMouseWheel(event)));
-        }
-        if (this.enableLens && this.circularLens) {
-            this.lensBorderRadius = this.lensWidth / 2;
-        }
-    }
-
-    ngOnDestroy(): void {
-        this.eventListeners.forEach((destroyFn) => destroyFn());
+    ngOnInit(): void {
+        this.setUpEventListeners();
     }
 
     ngOnChanges() {
@@ -205,7 +165,13 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, 
     }
 
     ngAfterViewInit(): void {
-        this.scrollParent = this.scrollParentSelector ? document.querySelector(this.scrollParentSelector) : this.elRef.nativeElement.parentElement;
+        this.scrollParent = this.scrollParentSelector ?
+            document.querySelector(this.scrollParentSelector) :
+            this.elRef.nativeElement.parentElement;
+    }
+
+    ngOnDestroy(): void {
+        this.eventListeners.forEach((destroyFn) => destroyFn());
     }
 
     /**
@@ -219,6 +185,62 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, 
     onFullImageLoaded() {
         this.fullImageLoaded = true;
         this.checkImagesLoaded();
+    }
+
+    private setUpEventListeners() {
+        if (this.zoomMode === 'hover') {
+            this.eventListeners.push(
+                this.renderer.listen(this.zoomContainer.nativeElement, 'mouseenter', (event) => this.hoverMouseEnter(event))
+            );
+            this.eventListeners.push(
+                this.renderer.listen(this.zoomContainer.nativeElement, 'mouseleave', () => this.hoverMouseLeave())
+            );
+            this.eventListeners.push(
+                this.renderer.listen(this.zoomContainer.nativeElement, 'mousemove', (event) => this.hoverMouseMove(event))
+            );
+        } else if (this.zoomMode === 'toggle') {
+            this.eventListeners.push(
+                this.renderer.listen(this.zoomContainer.nativeElement, 'click', (event) => this.toggleClick(event))
+            );
+        } else if (this.zoomMode === 'click') {
+            this.eventListeners.push(
+                this.renderer.listen(this.zoomContainer.nativeElement, 'click', (event) => this.clickStarter(event))
+            );
+            this.eventListeners.push(
+                this.renderer.listen(this.zoomContainer.nativeElement, 'mouseleave', () => this.clickMouseLeave())
+            );
+            this.eventListeners.push(
+                this.renderer.listen(this.zoomContainer.nativeElement, 'mousemove', (event) => this.clickMouseMove(event))
+            );
+        } else if (this.zoomMode === 'hover-freeze') {
+            this.eventListeners.push(
+                this.renderer.listen(this.zoomContainer.nativeElement, 'mouseenter', (event) => this.hoverFreezeMouseEnter(event))
+            );
+            this.eventListeners.push(
+                this.renderer.listen(this.zoomContainer.nativeElement, 'mouseleave', () => this.hoverFreezeMouseLeave())
+            );
+            this.eventListeners.push(
+                this.renderer.listen(this.zoomContainer.nativeElement, 'mousemove', (event) => this.hoverFreezeMouseMove(event))
+            );
+            this.eventListeners.push(
+                this.renderer.listen(this.zoomContainer.nativeElement, 'click', (event) => this.hoverFreezeClick(event))
+            );
+        }
+        if (this.enableScrollZoom) {
+            // Chrome: 'mousewheel', Firefox: 'DOMMouseScroll', IE: 'onmousewheel'
+            this.eventListeners.push(
+                this.renderer.listen(this.zoomContainer.nativeElement, 'mousewheel', (event) => this.onMouseWheel(event))
+            );
+            this.eventListeners.push(
+                this.renderer.listen(this.zoomContainer.nativeElement, 'DOMMouseScroll', (event) => this.onMouseWheel(event))
+            );
+            this.eventListeners.push(
+                this.renderer.listen(this.zoomContainer.nativeElement, 'onmousewheel', (event) => this.onMouseWheel(event))
+            );
+        }
+        if (this.enableLens && this.circularLens) {
+            this.lensBorderRadius = this.lensWidth / 2;
+        }
     }
 
     private checkImagesLoaded() {
@@ -240,7 +262,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, 
             x: this.latestMouseLeft,
             y: this.latestMouseTop
         };
-        this.onZoomPosition.emit(c);
+        this.zoomPosition.emit(c);
     }
 
 
@@ -248,8 +270,11 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, 
      * Mouse wheel event
      */
     private onMouseWheel(event: any) {
-        if(!this.zoomingEnabled) return;
-        
+        // Don't eat events if zooming isn't active
+        if (!this.zoomingEnabled || this.zoomFrozen) {
+            return;
+        }
+
         event = window.event || event; // old IE
         const direction = Math.max(Math.min((event.wheelDelta || -event.detail), 1), -1);
         if (direction > 0) {
@@ -293,7 +318,6 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, 
         } else {
             this.zoomOn(event);
         }
-        this.zoomingEnabled = !this.zoomingEnabled;
     }
 
     /**
@@ -301,14 +325,12 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, 
      */
     private clickStarter(event: MouseEvent) {
         if (this.zoomingEnabled === false) {
-            this.zoomingEnabled = true;
             this.zoomOn(event);
         }
     }
 
     private clickMouseLeave() {
         this.zoomOff();
-        this.zoomingEnabled = false;
     }
 
     private clickMouseMove(event: MouseEvent) {
@@ -340,13 +362,11 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, 
 
     private hoverFreezeClick(event: MouseEvent) {
         if (this.zoomingEnabled && this.zoomFrozen) {
-            this.zoomingEnabled = false;
             this.zoomFrozen = false;
             this.zoomOff();
         } else if (this.zoomingEnabled) {
             this.zoomFrozen = true;
         } else {
-            this.zoomingEnabled = true;
             this.zoomOn(event);
         }
     }
@@ -356,6 +376,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, 
      */
     private zoomOn(event: MouseEvent) {
         if (this.isReady) {
+            this.zoomingEnabled = true;
             this.calculateRatioAndOffset();
             this.display = 'block';
             this.calculateZoomPosition(event);
@@ -363,6 +384,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, 
     }
 
     private zoomOff() {
+        this.zoomingEnabled = false;
         this.display = 'none';
     }
 
@@ -390,7 +412,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, 
     }
 
     private calculateImageAndLensPosition() {
-        let lensLeftMod = 0, lensTopMod = 0;
+        let lensLeftMod = 0;
+        let lensTopMod = 0;
 
         if (this.enableLens) {
             lensLeftMod = this.lensLeft = this.latestMouseLeft - this.lensWidth / 2;

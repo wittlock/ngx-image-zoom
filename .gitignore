@@ -1,36 +1,30 @@
-# Node
-node_modules/*
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# compiled output
+/dist
+/tmp
+/out-tsc
+
+# dependencies
+/node_modules
+
+# profiling files
+chrome-profiler-events*.json
+speed-measure-plugin*.json
+
+# IDEs and editors
+/.idea
+
+# misc
+/.sass-cache
+/connect.lock
+/coverage
+/libpeerconnection.log
 npm-debug.log
+yarn-error.log
+testem.log
+/typings
 
-# TypeScript
-src/*.js
-src/*.map
-src/*.d.ts
-
-# JetBrains
-.idea
-.project
-.settings
-.idea/*
-*.iml
-
-# Windows
+# System Files
+.DS_Store
 Thumbs.db
-Desktop.ini
-
-# Ngc generated files
-**/*.ngfactory.ts
-
-# Build files
-dist/*
-.tmp/*
-
-# Playground tmp files
-.playground
-playground/*
-
-# Probably not needed either
-.travis.yml
-.yo-rc.json
-bs-config.json
-package-lock.json

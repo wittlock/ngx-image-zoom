@@ -1,3 +1,9 @@
+<a name="0.5.1"></a>
+# 0.5.1
+
+### Bugfixes
+* Replaced BrowserModule with CommonModule. ([Angular guide](https://angular.io/guide/frequent-ngmodules#browsermodule-and-commonmodule))
+
 <a name="0.5.0"></a>
 # 0.5.0
 

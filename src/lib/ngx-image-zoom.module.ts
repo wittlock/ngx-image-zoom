@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { NgxImageZoomComponent } from './ngx-image-zoom.component';
-import { BrowserModule } from '@angular/platform-browser';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
     declarations: [
         NgxImageZoomComponent,
     ],
     imports: [
-        BrowserModule,
+        CommonModule,
     ],
     exports: [
         NgxImageZoomComponent

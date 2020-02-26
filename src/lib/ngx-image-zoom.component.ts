@@ -389,22 +389,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, 
     }
 
     private calculateZoomPosition(event: MouseEvent) {
-        let scrollLeftOffset = 0;
-        let scrollTopOffset = 0;
-        if (this.scrollParent !== null) {
-            scrollLeftOffset = this.scrollParent.scrollLeft;
-            scrollTopOffset = this.scrollParent.scrollTop;
-        }
-
-        const left = (event.pageX - this.offsetLeft + scrollLeftOffset);
-        let top = (event.pageY - this.offsetTop + scrollTopOffset);
-
-        if (this.isInsideStaticContainer) {
-            top -= (document.querySelector('html') as HTMLElement).scrollTop;
-        }
-
-        const newLeft = Math.max(Math.min(left, this.thumbWidth), 0);
-        const newTop = Math.max(Math.min(top, this.thumbHeight), 0);
+        const newLeft = Math.max(Math.min(event.offsetX, this.thumbWidth), 0);
+        const newTop = Math.max(Math.min(event.offsetY, this.thumbHeight), 0);
 
         this.setZoomPosition(newLeft, newTop);
 
@@ -437,15 +423,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, 
         }
 
         // getBoundingClientRect() ? https://stackoverflow.com/a/44008873
-        this.offsetTop = this.zoomContainer.nativeElement.offsetTop;
-        this.offsetLeft = this.zoomContainer.nativeElement.offsetLeft;
-        // If we have an offsetParent, we need to add its offset too and recurse until we can't find more offsetParents.
-        let parentContainer = this.zoomContainer.nativeElement.offsetParent;
-        while (parentContainer != null) {
-            this.offsetTop += parentContainer.offsetTop;
-            this.offsetLeft += parentContainer.offsetLeft;
-            parentContainer = parentContainer.offsetParent;
-        }
+        this.offsetTop = this.imageThumbnail.nativeElement.getBoundingClientRect().top;
+        this.offsetLeft = this.imageThumbnail.nativeElement.getBoundingClientRect().left;
 
         if (this.fullImage === undefined) {
             this.fullImage = this.thumbImage;

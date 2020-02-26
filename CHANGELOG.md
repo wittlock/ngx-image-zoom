@@ -1,3 +1,13 @@
+<a name="0.6.0"></a>
+# 0.6.0
+
+### Breaking changes
+* Removed input parameters *scrollParentSelector* and *isInsideStaticContainer* as I believe these are no longer needed.
+
+### Features
+* Rewrote the zooming position calculations, it feels much more robust now and will hopefully perform as expected in
+more situations with complex layouts.
+
 <a name="0.5.1"></a>
 # 0.5.1
 

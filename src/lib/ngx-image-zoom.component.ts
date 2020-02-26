@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 
 export interface Coord {
     x: number;
@@ -10,7 +10,7 @@ export interface Coord {
     templateUrl: './ngx-image-zoom.component.html',
     styleUrls: ['./ngx-image-zoom.component.css']
 })
-export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, OnDestroy {
+export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
 
     private static readonly validZoomModes: string[] = ['hover', 'toggle', 'click', 'hover-freeze'];
 
@@ -61,13 +61,10 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, 
 
     private latestMouseLeft: number;
     private latestMouseTop: number;
-    private scrollParent: Element;
-    private scrollParentSelector: string;
-    private isInsideStaticContainer = false;
 
     private eventListeners: (() => void)[] = [];
 
-    constructor(private renderer: Renderer2, private elRef: ElementRef) {
+    constructor(private renderer: Renderer2) {
     }
 
     @Input('thumbImage')
@@ -138,16 +135,6 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, 
         this.enableScrollZoom = Boolean(enable);
     }
 
-    @Input('scrollParentSelector')
-    public set setScrollParentSelector(selector: string) {
-        this.scrollParentSelector = selector;
-    }
-
-    @Input('isInsideStaticContainer')
-    public set setisInsideStaticContainer(isInStatic: boolean) {
-        this.isInsideStaticContainer = isInStatic;
-    }
-
     ngOnInit(): void {
         this.setUpEventListeners();
     }
@@ -162,12 +149,6 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, AfterViewInit, 
         }
         this.calculateRatioAndOffset();
         this.calculateImageAndLensPosition();
-    }
-
-    ngAfterViewInit(): void {
-        this.scrollParent = this.scrollParentSelector ?
-            document.querySelector(this.scrollParentSelector) :
-            this.elRef.nativeElement.parentElement;
     }
 
     ngOnDestroy(): void {

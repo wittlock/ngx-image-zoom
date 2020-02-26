@@ -1,6 +1,6 @@
 {
     "name": "ngx-image-zoom",
-    "version": "0.5.1",
+    "version": "0.6.0",
     "scripts": {
         "build": "ng build ngx-image-zoom",
         "build:release": "ng build ngx-image-zoom --prod",

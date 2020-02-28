@@ -42,7 +42,7 @@ minZoomRatio | *baseRatio* | Lower limit on how much zoom can be applied with sc
 maxZoomRatio | 2 | Upper limit on how much zoom can be applied with scrollZoom enabled. See below for details.
 
 ### Zoom modes
-Mode | Description
+&#160;&#160;&#160;&#160;&#160;&#160;Mode&#160;&#160;&#160;&#160;&#160;&#160; | Description
 :---:|---
 hover | Whenever the mouse cursor moves over the thumbnail it will show the zoomed image until it leaves the thumbnail.
 click | Similar to hover but it only starts zooming if the user clicks the image. Moving the cursor away from the image disables it again.

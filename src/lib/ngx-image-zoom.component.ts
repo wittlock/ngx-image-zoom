@@ -33,8 +33,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
 
     public thumbImage: string;
     public fullImage: string;
-    public thumbWidth: number;
-    public thumbHeight: number;
+    public thumbWidth = 0;
+    public thumbHeight = 0;
     public fullWidth: number;
     public fullHeight: number;
     public lensWidth = 100;
@@ -58,7 +58,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     private isReady = false;
     private thumbImageLoaded = false;
     private fullImageLoaded = false;
-
+    private skipChange = true;
     private latestMouseLeft: number;
     private latestMouseTop: number;
 
@@ -137,6 +137,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
 
     ngOnInit(): void {
         this.setUpEventListeners();
+        this.skipChange = false;
     }
 
     ngOnChanges() {
@@ -147,7 +148,11 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
                 this.lensBorderRadius = 0;
             }
         }
-        this.calculateRatioAndOffset();
+        if(!this.skipChange){
+            // this function need to be skipped for the first run of ngOnChanges since getBoundingClientRect()
+            // is not available in ssr as it is dom method.
+            this.calculateRatioAndOffset();
+        }
         this.calculateImageAndLensPosition();
     }
 

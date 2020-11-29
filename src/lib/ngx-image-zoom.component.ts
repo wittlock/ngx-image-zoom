@@ -1,5 +1,5 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
-
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, ViewChild, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 export interface Coord {
     x: number;
     y: number;
@@ -147,7 +147,9 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
                 this.lensBorderRadius = 0;
             }
         }
-        this.calculateRatioAndOffset();
+        if(isPlatformBrowser(PLATFORM_ID)){
+            this.calculateRatioAndOffset();
+        }
         this.calculateImageAndLensPosition();
     }
 

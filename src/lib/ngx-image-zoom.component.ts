@@ -1,5 +1,5 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
-
+import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, ViewChild, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 export interface Coord {
     x: number;
     y: number;
@@ -33,10 +33,10 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
 
     public thumbImage: string;
     public fullImage: string;
-    public thumbWidth: number;
-    public thumbHeight: number;
-    public fullWidth: number;
-    public fullHeight: number;
+    public thumbWidth = 0;
+    public thumbHeight = 0;
+    public fullWidth = 0;
+    public fullHeight = 0;
     public lensWidth = 100;
     public lensHeight = 100;
 
@@ -64,7 +64,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
 
     private eventListeners: (() => void)[] = [];
 
-    constructor(private renderer: Renderer2) {
+    constructor(private renderer: Renderer2, @Inject(PLATFORM_ID) private platformId: string) {
     }
 
     @Input('thumbImage')
@@ -147,7 +147,9 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
                 this.lensBorderRadius = 0;
             }
         }
-        this.calculateRatioAndOffset();
+        if(isPlatformBrowser(this.platformId)){
+            this.calculateRatioAndOffset();
+        }
         this.calculateImageAndLensPosition();
     }
 

@@ -1,10 +1,10 @@
-<a name="0.6.0"></a>
-# 0.6.2
+<a name="0.6.3"></a>
+# 0.6.3
 ### Features
 * added `alt` tags for both rendered images, `thumbnailAlt` and `fullsizeAlt` respectively 
 
-<a name="0.6.1"></a>
-# 0.6.1
+<a name="0.6.2"></a>
+# 0.6.2
 ### Bugfixes
 * fixed ChangeDetection when ngx-image-zoom is embedded in OnPush components
 

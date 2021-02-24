@@ -1,4 +1,14 @@
 <a name="0.6.0"></a>
+# 0.6.2
+### Features
+* added `alt` tags for both rendered images, `thumbnailAlt` and `fullsizeAlt` respectively 
+
+<a name="0.6.1"></a>
+# 0.6.1
+### Bugfixes
+* fixed ChangeDetection when ngx-image-zoom is embedded in OnPush components
+
+<a name="0.6.0"></a>
 # 0.6.0
 
 ### Breaking changes
@@ -18,7 +28,7 @@ more situations with complex layouts.
 # 0.5.0
 
 ### Breaking changes
-* To comply with recommendaing naming conventions the follow name changes have been done:
+* To comply with recommended naming conventions the following name changes have been done:
     * Changed tag name from *ngx-image-zoom* to *lib-ngx-image-zoom* ([style 02-07](https://angular.io/guide/styleguide#style-02-07))
     * Changed output *onZoomScroll* to *zoomScroll* ([style 05-16](https://angular.io/guide/styleguide#style-05-16))
     * Changed output *onZoomPosition* to *zoomPosition* ([style 05-16](https://angular.io/guide/styleguide#style-05-16))

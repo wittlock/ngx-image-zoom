@@ -32,6 +32,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     public enableLens = false;
     public lensBorderRadius = 0;
 
+    public thumbnailAlt = '';
+    public fullsizeAlt = '';
     public thumbImage: string;
     public fullImage: string;
     public thumbWidth: number;
@@ -66,6 +68,16 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     private eventListeners: (() => void)[] = [];
 
     constructor(private renderer: Renderer2, private changeDetectorRef: ChangeDetectorRef) {
+    }
+
+    @Input('thumbnailAlt')
+    public set setThumbnailAlt(thumbnailAlt: string) {
+        this.thumbnailAlt = thumbnailAlt;
+    }
+
+    @Input('fullsizeAlt')
+    public set setFullsizeAlt(fullsizeAlt: string) {
+        this.fullsizeAlt = fullsizeAlt;
     }
 
     @Input('thumbImage')

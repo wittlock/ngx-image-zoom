@@ -1,4 +1,17 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { isPlatformServer } from '@angular/common';
+import {
+    Component,
+    ElementRef,
+    EventEmitter, Inject,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output, PLATFORM_ID,
+    PlatformRef,
+    Renderer2,
+    ViewChild
+} from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
 
 export interface Coord {
@@ -67,7 +80,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
 
     private eventListeners: (() => void)[] = [];
 
-    constructor(private renderer: Renderer2, private changeDetectorRef: ChangeDetectorRef) {
+    constructor(private renderer: Renderer2, private changeDetectorRef: ChangeDetectorRef,
+                @Inject(PLATFORM_ID) private platformRef: PlatformRef) {
     }
 
     @Input('thumbnailAlt')
@@ -160,6 +174,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
                 this.lensBorderRadius = 0;
             }
         }
+
         this.calculateRatioAndOffset();
         this.calculateImageAndLensPosition();
     }
@@ -182,6 +197,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private setUpEventListeners() {
+        if (isPlatformServer(this.platformRef)) { return; }
+
         if (this.zoomMode === 'hover') {
             this.eventListeners.push(
                 this.renderer.listen(this.zoomContainer.nativeElement, 'mouseenter', (event) => this.hoverMouseEnter(event))
@@ -238,6 +255,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private checkImagesLoaded() {
+        if (isPlatformServer(this.platformRef)) { return; }
+
         this.calculateRatioAndOffset();
         if (this.thumbImageLoaded && this.fullImageLoaded) {
             this.calculateImageAndLensPosition();
@@ -408,6 +427,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private calculateRatioAndOffset() {
+        if (isPlatformServer(this.platformRef)) { return; }
+
         this.thumbWidth = this.imageThumbnail.nativeElement.width;
         this.thumbHeight = this.imageThumbnail.nativeElement.height;
 

@@ -1,6 +1,6 @@
 {
     "name": "@zeit-dev/ngx-image-zoom",
-    "version": "0.6.3",
+    "version": "0.6.4",
     "scripts": {
         "build": "ng build ngx-image-zoom",
         "build:release": "ng build ngx-image-zoom --prod",

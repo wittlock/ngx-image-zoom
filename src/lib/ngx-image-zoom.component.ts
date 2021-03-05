@@ -1,4 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { ChangeDetectorRef } from '@angular/core';
 
 export interface Coord {
     x: number;
@@ -31,6 +32,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     public enableLens = false;
     public lensBorderRadius = 0;
 
+    public thumbnailAlt = '';
+    public fullsizeAlt = '';
     public thumbImage: string;
     public fullImage: string;
     public thumbWidth: number;
@@ -64,7 +67,17 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
 
     private eventListeners: (() => void)[] = [];
 
-    constructor(private renderer: Renderer2) {
+    constructor(private renderer: Renderer2, private changeDetectorRef: ChangeDetectorRef) {
+    }
+
+    @Input('thumbnailAlt')
+    public set setThumbnailAlt(thumbnailAlt: string) {
+        this.thumbnailAlt = thumbnailAlt;
+    }
+
+    @Input('fullsizeAlt')
+    public set setFullsizeAlt(fullsizeAlt: string) {
+        this.fullsizeAlt = fullsizeAlt;
     }
 
     @Input('thumbImage')
@@ -367,6 +380,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     private zoomOff() {
         this.zoomingEnabled = false;
         this.display = 'none';
+        this.changeDetectorRef.markForCheck();
     }
 
     private calculateZoomPosition(event: MouseEvent) {
@@ -389,6 +403,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
 
         this.fullImageLeft = (this.latestMouseLeft * -this.xRatio) - lensLeftMod;
         this.fullImageTop = (this.latestMouseTop * -this.yRatio) - lensTopMod;
+
+        this.changeDetectorRef.markForCheck();
     }
 
     private calculateRatioAndOffset() {

@@ -30,6 +30,8 @@ Option | Default&#160;value | Description
 :---:|:---:|---
 thumbImage | *none* | (Required) The smaller version of the image that will be shown when there's no interaction by the user.
 fullImage | *none* | The full resolution version of the image to be used when zooming. If not supplied thumbImage will be used.
+thumbnailAlt | '' | Alternative tag for the thumbnail in case image could not be loaded.
+fullsizeAlt | '' | Alternative tag for the full size image in case image could not be loaded.
 magnification | 1 | The zoom factor to be used by default. 1 means we use the fullImage at its actual resolution.
 zoomMode | 'hover' | The mode of zooming to use, these are explained in a table below.
 enableScrollZoom | false | Boolean that toggles if the mouse wheel should be captured when hovering over the image to adjust magnification.

@@ -12,7 +12,7 @@ export interface Coord {
 })
 export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
 
-    private static readonly validZoomModes: string[] = ['hover', 'toggle', 'click', 'hover-freeze'];
+    private static readonly validZoomModes: string[] = ['hover', 'toggle', 'click', 'toggle-click', 'hover-freeze'];
 
     @ViewChild('zoomContainer', {static: true}) zoomContainer !: ElementRef;
     @ViewChild('imageThumbnail', {static: true}) imageThumbnail !: ElementRef;
@@ -182,6 +182,16 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
         } else if (this.zoomMode === 'toggle') {
             this.eventListeners.push(
                 this.renderer.listen(this.zoomContainer.nativeElement, 'click', (event) => this.toggleClick(event))
+            );
+        } else if (this.zoomMode === 'toggle-click') {
+            this.eventListeners.push(
+                this.renderer.listen(this.zoomContainer.nativeElement, 'click', (event) => this.toggleClick(event))
+            );
+            this.eventListeners.push(
+                this.renderer.listen(this.zoomContainer.nativeElement, 'mouseleave', () => this.clickMouseLeave())
+            );
+            this.eventListeners.push(
+                this.renderer.listen(this.zoomContainer.nativeElement, 'mousemove', (event) => this.clickMouseMove(event))
             );
         } else if (this.zoomMode === 'click') {
             this.eventListeners.push(

@@ -47,6 +47,7 @@ Mode | Description
 hover | Whenever the mouse cursor moves over the thumbnail it will show the zoomed image until it leaves the thumbnail.
 click | Similar to hover but it only starts zooming if the user clicks the image. Moving the cursor away from the image disables it again.
 toggle | A click in the image will zoom at the point of the cursor. Another click will restore the small image.
+toggle-click | Combination of toggle and click. A click in the image will start zooming. Another click or moving the cursor away from the image will restore the small image.
 hover-freeze | First click enables hover mode, second click freezes the zoomed image where it is, third click restores thumbnail.
 
 ### Zoom ratio

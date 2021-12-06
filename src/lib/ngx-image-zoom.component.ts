@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 
 export interface Coord {
     x: number;
@@ -21,22 +21,22 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     @Output() zoomScroll = new EventEmitter<number>();
     @Output() zoomPosition = new EventEmitter<Coord>();
 
-    public display: string;
-    public fullImageTop: number;
-    public fullImageLeft: number;
-    public magnifiedWidth: number;
-    public magnifiedHeight: number;
-    public lensTop: number;
-    public lensLeft: number;
+    public display?: string;
+    public fullImageTop?: number;
+    public fullImageLeft?: number;
+    public magnifiedWidth?: number;
+    public magnifiedHeight?: number;
+    public lensTop?: number;
+    public lensLeft?: number;
     public enableLens = false;
     public lensBorderRadius = 0;
 
-    public thumbImage: string;
-    public fullImage: string;
-    public thumbWidth: number;
-    public thumbHeight: number;
-    public fullWidth: number;
-    public fullHeight: number;
+    public thumbImage?: string;
+    public fullImage?: string;
+    public thumbWidth: number = 0;
+    public thumbHeight: number = 0;
+    public fullWidth: number = 0;
+    public fullHeight: number = 0;
     public lensWidth = 100;
     public lensHeight = 100;
 
@@ -46,25 +46,25 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     private scrollStepSize = 0.1;
     private circularLens = false;
 
-    private baseRatio: number;
-    private minZoomRatio;
+    private baseRatio?: number;
+    private minZoomRatio: number =1;
     private maxZoomRatio = 2;
-    private xRatio: number;
-    private yRatio: number;
-    private offsetLeft: number;
-    private offsetTop: number;
+    private xRatio: number = 0;
+    private yRatio: number = 0;
+    private offsetLeft?: number;
+    private offsetTop?: number;
     private zoomingEnabled = false;
     private zoomFrozen = false;
     private isReady = false;
     private thumbImageLoaded = false;
     private fullImageLoaded = false;
 
-    private latestMouseLeft: number;
-    private latestMouseTop: number;
+    private latestMouseLeft: number = 0;
+    private latestMouseTop: number = 0;
 
     private eventListeners: (() => void)[] = [];
 
-    constructor(private renderer: Renderer2) {
+    constructor(private renderer: Renderer2, private changeDetectorRef: ChangeDetectorRef) {
     }
 
     @Input('thumbImage')
@@ -357,6 +357,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
             this.zoomOff();
         } else if (this.zoomingEnabled) {
             this.zoomFrozen = true;
+            this.changeDetectorRef.markForCheck();
         } else {
             this.zoomOn(event);
         }
@@ -371,12 +372,14 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
             this.calculateRatioAndOffset();
             this.display = 'block';
             this.calculateZoomPosition(event);
+            this.changeDetectorRef.markForCheck();
         }
     }
 
     private zoomOff() {
         this.zoomingEnabled = false;
         this.display = 'none';
+        this.changeDetectorRef.markForCheck();
     }
 
     private calculateZoomPosition(event: MouseEvent) {
@@ -386,6 +389,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
         this.setZoomPosition(newLeft, newTop);
 
         this.calculateImageAndLensPosition();
+
+        this.changeDetectorRef.markForCheck();
     }
 
     private calculateImageAndLensPosition() {

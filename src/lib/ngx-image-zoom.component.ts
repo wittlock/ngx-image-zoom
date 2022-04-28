@@ -33,10 +33,10 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
 
     public thumbImage?: string;
     public fullImage?: string;
-    public thumbWidth: number = 0;
-    public thumbHeight: number = 0;
-    public fullWidth: number = 0;
-    public fullHeight: number = 0;
+    public thumbWidth = 0;
+    public thumbHeight = 0;
+    public fullWidth = 0;
+    public fullHeight = 0;
     public lensWidth = 100;
     public lensHeight = 100;
 
@@ -47,10 +47,10 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     private circularLens = false;
 
     private baseRatio?: number;
-    private minZoomRatio: number =1;
+    private minZoomRatio = 1;
     private maxZoomRatio = 2;
-    private xRatio: number = 0;
-    private yRatio: number = 0;
+    private xRatio = 0;
+    private yRatio = 0;
     private offsetLeft?: number;
     private offsetTop?: number;
     private zoomingEnabled = false;
@@ -59,8 +59,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     private thumbImageLoaded = false;
     private fullImageLoaded = false;
 
-    private latestMouseLeft: number = 0;
-    private latestMouseTop: number = 0;
+    private latestMouseLeft = 0;
+    private latestMouseTop = 0;
 
     private eventListeners: (() => void)[] = [];
 

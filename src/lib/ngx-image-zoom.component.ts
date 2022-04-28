@@ -59,8 +59,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     private thumbImageLoaded = false;
     private fullImageLoaded = false;
 
-    private latestMouseLeft = 0;
-    private latestMouseTop = 0;
+    private latestMouseLeft = -1;
+    private latestMouseTop = -1;
 
     private eventListeners: (() => void)[] = [];
 
@@ -397,7 +397,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
         let lensLeftMod = 0;
         let lensTopMod = 0;
 
-        if (this.enableLens) {
+        if (this.enableLens && this.latestMouseLeft > 0) {
             lensLeftMod = this.lensLeft = this.latestMouseLeft - this.lensWidth / 2;
             lensTopMod = this.lensTop = this.latestMouseTop - this.lensHeight / 2;
         }

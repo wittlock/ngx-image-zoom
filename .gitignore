@@ -1,10 +1,11 @@
+.angular
 .idea/
-*.iml
+dist/
 node_modules/
+*.iml
 .playground/
 playground/
 .travis.yml
 .yo-rc.json
 bs-config.json
-dist/
 package-lock.json

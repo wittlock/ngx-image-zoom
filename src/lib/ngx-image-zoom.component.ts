@@ -20,6 +20,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
 
     @Output() zoomScroll = new EventEmitter<number>();
     @Output() zoomPosition = new EventEmitter<Coord>();
+    @Output() imagesLoaded = new EventEmitter<boolean>();
 
     public display?: string;
     public fullImageTop?: number;
@@ -70,14 +71,14 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     @Input('thumbImage')
     public set setThumbImage(thumbImage: string) {
         this.thumbImageLoaded = false;
-        this.isReady = false;
+        this.setIsReady(false);
         this.thumbImage = thumbImage;
     }
 
     @Input('fullImage')
     public set setFullImage(fullImage: string) {
         this.fullImageLoaded = false;
-        this.isReady = false;
+        this.setIsReady(false);
         this.fullImage = fullImage;
     }
 
@@ -238,8 +239,13 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
         this.calculateRatioAndOffset();
         if (this.thumbImageLoaded && this.fullImageLoaded) {
             this.calculateImageAndLensPosition();
-            this.isReady = true;
+            this.setIsReady(true);
         }
+    }
+
+    private setIsReady(value: boolean) {
+        this.isReady = value;
+        this.imagesLoaded.emit(value);
     }
 
     /**

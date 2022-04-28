@@ -66,6 +66,7 @@ Event&#160;name | Description
 :---:|---
 zoomScroll | Whenever the user changes the zoom level using the scroll wheel this event will fire with the current zoom ratio (see above).
 zoomPosition | When the point on where the zoom is focused changes this event emits a Coord event (interface exported from the module) with X/Y in pixels relative thumbnails top left corner. Practically whenever the user moves the mouse cursor over the image.
+imagesLoaded | When the thumbnail and fullImage are loaded and ready to be used this output emits "true". It will emit "false" if images are changed and on initial setup
 
 ## Installation
 

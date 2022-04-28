@@ -1,3 +1,11 @@
+<a name="1.0.0"></a>
+# 1.0.0
+
+### Features
+* Updated for latest Angular
+* Merged PR#88 for toggle-click zoom mode
+* Merged PR#76 with potential fix for server-side rendering
+
 <a name="0.6.0"></a>
 # 0.6.0
 

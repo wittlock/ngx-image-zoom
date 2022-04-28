@@ -4,7 +4,7 @@
 ### Features
 * Updated for latest Angular
 * Merged PR#88 for toggle-click zoom mode
-* Merged PR#76 with potential fix for server-side rendering
+* Added additional @Output, imagesLoaded, showing the value of isReady. Which is true when both thumbnail and fullImage is loaded 
 
 <a name="0.6.0"></a>
 # 0.6.0

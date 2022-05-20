@@ -136,6 +136,9 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
         this.enableScrollZoom = Boolean(enable);
     }
 
+    @Input() altText = '';
+    @Input() titleText = '';
+
     ngOnInit(): void {
         this.setUpEventListeners();
     }

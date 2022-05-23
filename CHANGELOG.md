@@ -1,3 +1,10 @@
+<a name="1.0.1"></a>
+# 1.0.1
+
+ ### Features
+ * Added `alt` and `title` attributes to the thumb and full image with `altText` and `titleText` inputs.
+ 
+
 <a name="1.0.0"></a>
 # 1.0.0
 

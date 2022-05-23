@@ -14,9 +14,9 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
 
     private static readonly validZoomModes: string[] = ['hover', 'toggle', 'click', 'toggle-click', 'hover-freeze'];
 
-    @ViewChild('zoomContainer', {static: true}) zoomContainer !: ElementRef;
-    @ViewChild('imageThumbnail', {static: true}) imageThumbnail !: ElementRef;
-    @ViewChild('fullSizeImage', {static: true}) fullSizeImage !: ElementRef;
+    @ViewChild('zoomContainer', { static: true }) zoomContainer !: ElementRef;
+    @ViewChild('imageThumbnail', { static: true }) imageThumbnail !: ElementRef;
+    @ViewChild('fullSizeImage', { static: true }) fullSizeImage !: ElementRef;
 
     @Output() zoomScroll = new EventEmitter<number>();
     @Output() zoomPosition = new EventEmitter<Coord>();
@@ -136,6 +136,9 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
         this.enableScrollZoom = Boolean(enable);
     }
 
+    @Input() altText = '';
+    @Input() titleText = '';
+
     ngOnInit(): void {
         this.setUpEventListeners();
     }
@@ -170,66 +173,54 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private setUpEventListeners() {
-        if (this.zoomMode === 'hover') {
-            this.eventListeners.push(
-                this.renderer.listen(this.zoomContainer.nativeElement, 'mouseenter', (event) => this.hoverMouseEnter(event))
-            );
-            this.eventListeners.push(
-                this.renderer.listen(this.zoomContainer.nativeElement, 'mouseleave', () => this.hoverMouseLeave())
-            );
-            this.eventListeners.push(
-                this.renderer.listen(this.zoomContainer.nativeElement, 'mousemove', (event) => this.hoverMouseMove(event))
-            );
-        } else if (this.zoomMode === 'toggle') {
-            this.eventListeners.push(
-                this.renderer.listen(this.zoomContainer.nativeElement, 'click', (event) => this.toggleClick(event))
-            );
-        } else if (this.zoomMode === 'toggle-click') {
-            this.eventListeners.push(
-                this.renderer.listen(this.zoomContainer.nativeElement, 'click', (event) => this.toggleClick(event))
-            );
-            this.eventListeners.push(
-                this.renderer.listen(this.zoomContainer.nativeElement, 'mouseleave', () => this.clickMouseLeave())
-            );
-            this.eventListeners.push(
-                this.renderer.listen(this.zoomContainer.nativeElement, 'mousemove', (event) => this.clickMouseMove(event))
-            );
-        } else if (this.zoomMode === 'click') {
-            this.eventListeners.push(
-                this.renderer.listen(this.zoomContainer.nativeElement, 'click', (event) => this.clickStarter(event))
-            );
-            this.eventListeners.push(
-                this.renderer.listen(this.zoomContainer.nativeElement, 'mouseleave', () => this.clickMouseLeave())
-            );
-            this.eventListeners.push(
-                this.renderer.listen(this.zoomContainer.nativeElement, 'mousemove', (event) => this.clickMouseMove(event))
-            );
-        } else if (this.zoomMode === 'hover-freeze') {
-            this.eventListeners.push(
-                this.renderer.listen(this.zoomContainer.nativeElement, 'mouseenter', (event) => this.hoverFreezeMouseEnter(event))
-            );
-            this.eventListeners.push(
-                this.renderer.listen(this.zoomContainer.nativeElement, 'mouseleave', () => this.hoverFreezeMouseLeave())
-            );
-            this.eventListeners.push(
-                this.renderer.listen(this.zoomContainer.nativeElement, 'mousemove', (event) => this.hoverFreezeMouseMove(event))
-            );
-            this.eventListeners.push(
-                this.renderer.listen(this.zoomContainer.nativeElement, 'click', (event) => this.hoverFreezeClick(event))
-            );
+
+        const nativeElement = this.zoomContainer.nativeElement;
+
+        switch (this.zoomMode) {
+            case 'hover':
+                this.eventListeners.push(
+                    this.renderer.listen(nativeElement, 'mouseenter', (event) => this.hoverMouseEnter(event)),
+                    this.renderer.listen(nativeElement, 'mouseleave', () => this.hoverMouseLeave()),
+                    this.renderer.listen(nativeElement, 'mousemove', (event) => this.hoverMouseMove(event))
+                );
+                break;
+            case 'toggle':
+                this.eventListeners.push(
+                    this.renderer.listen(nativeElement, 'click', (event) => this.toggleClick(event))
+                );
+                break;
+            case 'toggle-click':
+                this.eventListeners.push(
+                    this.renderer.listen(nativeElement, 'click', (event) => this.toggleClick(event)),
+                    this.renderer.listen(nativeElement, 'mouseleave', () => this.clickMouseLeave()),
+                    this.renderer.listen(nativeElement, 'mousemove', (event) => this.clickMouseMove(event))
+                );
+                break;
+            case 'click':
+                this.eventListeners.push(
+                    this.renderer.listen(nativeElement, 'click', (event) => this.clickStarter(event)),
+                    this.renderer.listen(nativeElement, 'mouseleave', () => this.clickMouseLeave()),
+                    this.renderer.listen(nativeElement, 'mousemove', (event) => this.clickMouseMove(event))
+                );
+                break;
+            case 'hover-freeze':
+                this.eventListeners.push(
+                    this.renderer.listen(nativeElement, 'mouseenter', (event) => this.hoverFreezeMouseEnter(event)),
+                    this.renderer.listen(nativeElement, 'mouseleave', () => this.hoverFreezeMouseLeave()),
+                    this.renderer.listen(nativeElement, 'mousemove', (event) => this.hoverFreezeMouseMove(event)),
+                    this.renderer.listen(nativeElement, 'click', (event) => this.hoverFreezeClick(event))
+                );
         }
+
         if (this.enableScrollZoom) {
             // Chrome: 'mousewheel', Firefox: 'DOMMouseScroll', IE: 'onmousewheel'
             this.eventListeners.push(
-                this.renderer.listen(this.zoomContainer.nativeElement, 'mousewheel', (event) => this.onMouseWheel(event))
-            );
-            this.eventListeners.push(
-                this.renderer.listen(this.zoomContainer.nativeElement, 'DOMMouseScroll', (event) => this.onMouseWheel(event))
-            );
-            this.eventListeners.push(
-                this.renderer.listen(this.zoomContainer.nativeElement, 'onmousewheel', (event) => this.onMouseWheel(event))
+                this.renderer.listen(nativeElement, 'mousewheel', (event) => this.onMouseWheel(event)),
+                this.renderer.listen(nativeElement, 'DOMMouseScroll', (event) => this.onMouseWheel(event)),
+                this.renderer.listen(nativeElement, 'onmousewheel', (event) => this.onMouseWheel(event))
             );
         }
+
         if (this.enableLens && this.circularLens) {
             this.lensBorderRadius = this.lensWidth / 2;
         }

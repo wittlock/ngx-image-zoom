@@ -31,7 +31,7 @@
     },
     "peerDependencies": {},
     "dependencies": {
-        "tslib": "^2.0.0"
+        "tslib": "^2.4.1"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "~13.3.4",

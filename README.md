@@ -14,6 +14,11 @@ state right now but it's not tested in lots of different setups yet.
 
 Demonstration of available features available [here](https://wittlock.github.io/ngx-image-zoom/).
 
+
+**Breaking changes** in version 1.2.0, see [changelog](CHANGELOG.md) for details.
+
+Demonstration of available features available ([here](https://ngx-image-zoom.web.app/)).
+
 ## About
 
 NgxImageZoom is inspired by [angular2-image-zoom](https://github.com/brtnshrdr/angular2-image-zoom) and 
@@ -51,7 +56,8 @@ hover | Whenever the mouse cursor moves over the thumbnail it will show the zoom
 click | Similar to hover but it only starts zooming if the user clicks the image. Moving the cursor away from the image disables it again.
 toggle | A click in the image will zoom at the point of the cursor. Another click will restore the small image.
 toggle-click | Combination of toggle and click. A click in the image will start zooming. Another click or moving the cursor away from the image will restore the small image.
-hover-freeze | First click enables hover mode, second click freezes the zoomed image where it is, third click restores thumbnail.
+toggle-freeze | First click enables hover mode, second click freezes the zoomed image where it is, third click restores thumbnail.
+hover-freeze | Whenever the mouse cursor moves over the thumbnail it will show the zoomed image, first click freezes the zoomed image where it is, second click restores thumbnail.
 
 ### Zoom ratio
 The zoom ratio used in the *minZoomRatio* and *maxZoomRatio* settings refer to the relative size of the thumbnail

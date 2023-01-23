@@ -17,7 +17,7 @@ Demonstration of available features available [here](https://wittlock.github.io/
 
 **Breaking changes** in version 1.2.0, see [changelog](CHANGELOG.md) for details.
 
-Demonstration of available features available ([here](https://ngx-image-zoom.web.app/)).
+Demonstration of available features available ([here](https://wittlock.github.io/ngx-image-zoom/)).
 
 ## About
 

@@ -4,7 +4,7 @@
 
 ## Project status
 
-This version is only tested with Angular13. Moving forward this library may or may not work on older versions
+This version is only tested with Angular15. Moving forward this library may or may not work on older versions
 of Angular anymore.
 
 Still in early development, more features are planned and incoming. Should be in a working 
@@ -15,7 +15,7 @@ state right now but it's not tested in lots of different setups yet.
 Demonstration of available features available [here](https://wittlock.github.io/ngx-image-zoom/).
 
 
-**Breaking changes** in version 1.2.0, see [changelog](CHANGELOG.md) for details.
+**Breaking changes** in version 2.0.0, see [changelog](CHANGELOG.md) for details.
 
 Demonstration of available features available ([here](https://wittlock.github.io/ngx-image-zoom/)).
 

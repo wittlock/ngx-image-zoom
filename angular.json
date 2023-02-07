@@ -30,6 +30,6 @@
           }
         }
       }
-    }},
-  "defaultProject": "ngx-image-zoom"
+    }
+  }
 }

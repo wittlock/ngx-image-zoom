@@ -1,3 +1,10 @@
+<a name="1.2.0"></a>
+# 1.2.0
+
+### Breaking changes
+* To implements 'toggle-freeze' as was 'hover-freeze' and does 'hover-freeze' without needing to click to zoom: Whenever the mouse cursor moves over the thumbnail it will show the zoomed image, first click freezes the zoomed image where it is, second click unfreeze thumbnail:
+    * Demonstration of available features available in ([v1.2.0](https://wittlock.github.io/ngx-image-zoom/))
+
 <a name="1.0.1"></a>
 # 1.0.1
 

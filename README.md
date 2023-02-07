@@ -32,32 +32,32 @@ similar concepts. This plugin works with both URLs to images and in-line images
 All settings except *thumbImage* are optional. If no *fullImage* is provided the thumbImage will be
 used as the high resolution version as well.
 
-Option | Default&#160;value | Description
-:---:|:---:|---
-thumbImage | *none* | (Required) The smaller version of the image that will be shown when there's no interaction by the user.
-fullImage | *none* | The full resolution version of the image to be used when zooming. If not supplied thumbImage will be used.
-magnification | 1 | The zoom factor to be used by default. 1 means we use the fullImage at its actual resolution.
-zoomMode | 'hover' | The mode of zooming to use, these are explained in a table below.
-enableScrollZoom | false | Boolean that toggles if the mouse wheel should be captured when hovering over the image to adjust magnification.
-scrollStepSize | 0.1 | When using scroll zoom this setting determines how big steps each scroll changes the zoom. 
-enableLens | false | If enabled only a small portion around the mouse cursor will actually magnify instead of the entire image area.
-lensWidth | 100 | Width of the lens, if enabled.
-lensHeight | 100 | Height of the lens, if enabled.
-circularLens | false | Make the lens circular instead of square. This will only look good if width and height are equal.
-minZoomRatio | *baseRatio* | Lower limit on how much zoom can be applied with scrollZoom enabled. See below for details.
-maxZoomRatio | 2 | Upper limit on how much zoom can be applied with scrollZoom enabled. See below for details.
-altText | '' | `alt` attribute of the thumb and full image.
-titleText | '' | `title` attribute of the thumb and full image.
+|      Option      | Default&#160;value | Description                                                                                                      |
+|:----------------:|:------------------:|------------------------------------------------------------------------------------------------------------------|
+|    thumbImage    |       *none*       | (Required) The smaller version of the image that will be shown when there's no interaction by the user.          |
+|    fullImage     |       *none*       | The full resolution version of the image to be used when zooming. If not supplied thumbImage will be used.       |
+|  magnification   |         1          | The zoom factor to be used by default. 1 means we use the fullImage at its actual resolution.                    |
+|     zoomMode     |      'hover'       | The mode of zooming to use, these are explained in a table below.                                                |
+| enableScrollZoom |       false        | Boolean that toggles if the mouse wheel should be captured when hovering over the image to adjust magnification. |
+|  scrollStepSize  |        0.1         | When using scroll zoom this setting determines how big steps each scroll changes the zoom.                       |
+|    enableLens    |       false        | If enabled only a small portion around the mouse cursor will actually magnify instead of the entire image area.  |
+|    lensWidth     |        100         | Width of the lens, if enabled.                                                                                   |
+|    lensHeight    |        100         | Height of the lens, if enabled.                                                                                  |
+|   circularLens   |       false        | Make the lens circular instead of square. This will only look good if width and height are equal.                |
+|   minZoomRatio   |    *baseRatio*     | Lower limit on how much zoom can be applied with scrollZoom enabled. See below for details.                      |
+|   maxZoomRatio   |         2          | Upper limit on how much zoom can be applied with scrollZoom enabled. See below for details.                      |
+|     altText      |         ''         | `alt` attribute of the thumb and full image.                                                                     |
+|    titleText     |         ''         | `title` attribute of the thumb and full image.                                                                   |
 
 ### Zoom modes
-Mode | Description
-:---:|---
-hover | Whenever the mouse cursor moves over the thumbnail it will show the zoomed image until it leaves the thumbnail.
-click | Similar to hover but it only starts zooming if the user clicks the image. Moving the cursor away from the image disables it again.
-toggle | A click in the image will zoom at the point of the cursor. Another click will restore the small image.
-toggle-click | Combination of toggle and click. A click in the image will start zooming. Another click or moving the cursor away from the image will restore the small image.
-toggle-freeze | First click enables hover mode, second click freezes the zoomed image where it is, third click restores thumbnail.
-hover-freeze | Whenever the mouse cursor moves over the thumbnail it will show the zoomed image, first click freezes the zoomed image where it is, second click restores thumbnail.
+|     Mode      | Description                                                                                                                                                          |
+|:-------------:|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|     hover     | Whenever the mouse cursor moves over the thumbnail it will show the zoomed image until it leaves the thumbnail.                                                      |
+|     click     | Similar to hover but it only starts zooming if the user clicks the image. Moving the cursor away from the image disables it again.                                   |
+|    toggle     | A click in the image will zoom at the point of the cursor. Another click will restore the small image.                                                               |
+| toggle-click  | Combination of toggle and click. A click in the image will start zooming. Another click or moving the cursor away from the image will restore the small image.       |
+| toggle-freeze | First click enables hover mode, second click freezes the zoomed image where it is, third click restores thumbnail.                                                   |
+| hover-freeze  | Whenever the mouse cursor moves over the thumbnail it will show the zoomed image, first click freezes the zoomed image where it is, second click restores thumbnail. |
 
 ### Zoom ratio
 The zoom ratio used in the *minZoomRatio* and *maxZoomRatio* settings refer to the relative size of the thumbnail
@@ -70,11 +70,11 @@ value for *maxZoomRatio* being *1* means the largest the fullSize image can appe
 
 The component outputs the follow events that can be triggered on.
 
-Event&#160;name | Description
-:---:|---
-zoomScroll | Whenever the user changes the zoom level using the scroll wheel this event will fire with the current zoom ratio (see above).
-zoomPosition | When the point on where the zoom is focused changes this event emits a Coord event (interface exported from the module) with X/Y in pixels relative thumbnails top left corner. Practically whenever the user moves the mouse cursor over the image.
-imagesLoaded | When the thumbnail and fullImage are loaded and ready to be used this output emits "true". It will emit "false" if images are changed and on initial setup
+| Event&#160;name | Description                                                                                                                                                                                                                                          |
+|:---------------:|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|   zoomScroll    | Whenever the user changes the zoom level using the scroll wheel this event will fire with the current zoom ratio (see above).                                                                                                                        |
+|  zoomPosition   | When the point on where the zoom is focused changes this event emits a Coord event (interface exported from the module) with X/Y in pixels relative thumbnails top left corner. Practically whenever the user moves the mouse cursor over the image. |
+|  imagesLoaded   | When the thumbnail and fullImage are loaded and ready to be used this output emits "true". It will emit "false" if images are changed and on initial setup                                                                                           |
 
 ## Installation
 

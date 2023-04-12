@@ -1,4 +1,5 @@
 import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import {SafeUrl} from '@angular/platform-browser';
 
 export interface Coord {
     x: number;
@@ -32,8 +33,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     public enableLens = false;
     public lensBorderRadius = 0;
 
-    public thumbImage?: string;
-    public fullImage?: string;
+    public thumbImage?: string | SafeUrl;
+    public fullImage?: string | SafeUrl;
     public thumbWidth = 0;
     public thumbHeight = 0;
     public fullWidth = 0;
@@ -69,14 +70,14 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     @Input('thumbImage')
-    public set setThumbImage(thumbImage: string) {
+    public set setThumbImage(thumbImage: string | SafeUrl) {
         this.thumbImageLoaded = false;
         this.setIsReady(false);
         this.thumbImage = thumbImage;
     }
 
     @Input('fullImage')
-    public set setFullImage(fullImage: string) {
+    public set setFullImage(fullImage: string | SafeUrl) {
         this.fullImageLoaded = false;
         this.setIsReady(false);
         this.fullImage = fullImage;

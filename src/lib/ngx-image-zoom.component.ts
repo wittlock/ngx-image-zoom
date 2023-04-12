@@ -33,8 +33,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     public enableLens = false;
     public lensBorderRadius = 0;
 
-    public thumbImage?: string | SafeUrl;
-    public fullImage?: string | SafeUrl;
+    public thumbImage?: string | SafeUrl | null;
+    public fullImage?: string | SafeUrl | null;
     public thumbWidth = 0;
     public thumbHeight = 0;
     public fullWidth = 0;
@@ -70,14 +70,14 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     @Input('thumbImage')
-    public set setThumbImage(thumbImage: string | SafeUrl) {
+    public set setThumbImage(thumbImage: string | SafeUrl | null) {
         this.thumbImageLoaded = false;
         this.setIsReady(false);
         this.thumbImage = thumbImage;
     }
 
     @Input('fullImage')
-    public set setFullImage(fullImage: string | SafeUrl) {
+    public set setFullImage(fullImage: string | SafeUrl | null) {
         this.fullImageLoaded = false;
         this.setIsReady(false);
         this.fullImage = fullImage;

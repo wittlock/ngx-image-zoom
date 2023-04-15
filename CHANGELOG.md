@@ -1,3 +1,9 @@
+<a name="2.1.0"></a>
+# 2.1.0
+
+ ### Features
+ * Added SafeUrl as data type for thumbImage and fullImage.
+
 <a name="2.0.0"></a>
 # 2.0.0
 

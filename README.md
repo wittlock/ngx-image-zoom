@@ -32,22 +32,22 @@ similar concepts. This plugin works with both URLs to images and in-line images
 All settings except *thumbImage* are optional. If no *fullImage* is provided the thumbImage will be
 used as the high resolution version as well.
 
-|      Option      | Default&#160;value | Description                                                                                                      |
-|:----------------:|:------------------:|------------------------------------------------------------------------------------------------------------------|
-|    thumbImage    |       *none*       | (Required) The smaller version of the image that will be shown when there's no interaction by the user.          |
-|    fullImage     |       *none*       | The full resolution version of the image to be used when zooming. If not supplied thumbImage will be used.       |
-|  magnification   |         1          | The zoom factor to be used by default. 1 means we use the fullImage at its actual resolution.                    |
-|     zoomMode     |      'hover'       | The mode of zooming to use, these are explained in a table below.                                                |
-| enableScrollZoom |       false        | Boolean that toggles if the mouse wheel should be captured when hovering over the image to adjust magnification. |
-|  scrollStepSize  |        0.1         | When using scroll zoom this setting determines how big steps each scroll changes the zoom.                       |
-|    enableLens    |       false        | If enabled only a small portion around the mouse cursor will actually magnify instead of the entire image area.  |
-|    lensWidth     |        100         | Width of the lens, if enabled.                                                                                   |
-|    lensHeight    |        100         | Height of the lens, if enabled.                                                                                  |
-|   circularLens   |       false        | Make the lens circular instead of square. This will only look good if width and height are equal.                |
-|   minZoomRatio   |    *baseRatio*     | Lower limit on how much zoom can be applied with scrollZoom enabled. See below for details.                      |
-|   maxZoomRatio   |         2          | Upper limit on how much zoom can be applied with scrollZoom enabled. See below for details.                      |
-|     altText      |         ''         | `alt` attribute of the thumb and full image.                                                                     |
-|    titleText     |         ''         | `title` attribute of the thumb and full image.                                                                   |
+|      Option      | Default&#160;value | Description                                                                                                                        |
+|:----------------:|:------------------:|------------------------------------------------------------------------------------------------------------------------------------|
+|    thumbImage    |       *none*       | (Required) The smaller version of the image that will be shown when there's no interaction by the user. String or SafeUrl type.    |
+|    fullImage     |       *none*       | The full resolution version of the image to be used when zooming. If not supplied thumbImage will be used. String or SafeUrl type. |
+|  magnification   |         1          | The zoom factor to be used by default. 1 means we use the fullImage at its actual resolution.                                      |
+|     zoomMode     |      'hover'       | The mode of zooming to use, these are explained in a table below.                                                                  |
+| enableScrollZoom |       false        | Boolean that toggles if the mouse wheel should be captured when hovering over the image to adjust magnification.                   |
+|  scrollStepSize  |        0.1         | When using scroll zoom this setting determines how big steps each scroll changes the zoom.                                         |
+|    enableLens    |       false        | If enabled only a small portion around the mouse cursor will actually magnify instead of the entire image area.                    |
+|    lensWidth     |        100         | Width of the lens, if enabled.                                                                                                     |
+|    lensHeight    |        100         | Height of the lens, if enabled.                                                                                                    |
+|   circularLens   |       false        | Make the lens circular instead of square. This will only look good if width and height are equal.                                  |
+|   minZoomRatio   |    *baseRatio*     | Lower limit on how much zoom can be applied with scrollZoom enabled. See below for details.                                        |
+|   maxZoomRatio   |         2          | Upper limit on how much zoom can be applied with scrollZoom enabled. See below for details.                                        |
+|     altText      |         ''         | `alt` attribute of the thumb and full image.                                                                                       |
+|    titleText     |         ''         | `title` attribute of the thumb and full image.                                                                                     |
 
 ### Zoom modes
 |     Mode      | Description                                                                                                                                                          |

@@ -1,5 +1,17 @@
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
-import {SafeUrl} from '@angular/platform-browser';
+import {
+    ChangeDetectorRef,
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output,
+    Renderer2,
+    ViewChild
+} from '@angular/core';
+import { SafeUrl } from '@angular/platform-browser';
 
 export interface Coord {
     x: number;

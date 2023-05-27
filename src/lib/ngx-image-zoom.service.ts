@@ -26,8 +26,6 @@ export class NgxImageZoomService {
     public maxZoomRatio = 2;
     public magnification = 1;
 
-    // public imageThumbnail: ElementRef;
-    // public fullSizeImage: ElementRef;
     public fullImageLoaded: boolean;
 
     public fullWidth = 0;
@@ -60,9 +58,6 @@ export class NgxImageZoomService {
     }
 
     calculateRatioAndOffset() {
-        // this.thumbWidth = this.imageThumbnail.nativeElement.width;
-        // this.thumbHeight = this.imageThumbnail.nativeElement.height;
-
         // If lens is disabled, set lens size to equal thumb size and position it on top of the thumb
         if (!this.enableLens) {
             this.lensWidth = this.thumbWidth;
@@ -71,15 +66,7 @@ export class NgxImageZoomService {
             this.lensTop = 0;
         }
 
-        // FIXME
-        /*if (this.fullSizeImage === undefined) {
-            this.fullSizeImage = this.imageThumbnail;
-        }*/
-
         if (this.fullImageLoaded) {
-            // this.fullWidth = this.fullSizeImage.nativeElement.naturalWidth;
-            // this.fullHeight = this.fullSizeImage.nativeElement.naturalHeight;
-
             this.baseRatio = Math.max(
                 (this.thumbWidth / this.fullWidth),
                 (this.thumbHeight / this.fullHeight));

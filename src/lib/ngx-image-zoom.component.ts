@@ -38,18 +38,11 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     public lensBorderRadius = 0;
 
     private zoomMode = 'hover';
-    // private magnification = 1;
     private enableScrollZoom = false;
     private scrollStepSize = 0.1;
     private circularLens = false;
 
-    // private lensWidth = 100;
-    // private lensHeight = 100;
-    // private baseRatio?: number;
-    // private minZoomRatio = 1;
-    // private maxZoomRatio = 2;
     private thumbImageLoaded = false;
-    // private fullImageLoaded = false;
 
     private zoomInstance: ZoomMode | undefined;
     private subscriptions: Array<Subscription> = [];

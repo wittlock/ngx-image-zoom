@@ -43,8 +43,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     private scrollStepSize = 0.1;
     private circularLens = false;
 
-    private lensWidth = 100;
-    private lensHeight = 100;
+    // private lensWidth = 100;
+    // private lensHeight = 100;
     private baseRatio?: number;
     private minZoomRatio = 1;
     private maxZoomRatio = 2;
@@ -116,12 +116,12 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input('lensWidth')
     public set setLensWidth(width: number) {
-        this.lensWidth = Number(width) || this.lensWidth;
+        this.zoomService.lensWidth = Number(width) || this.zoomService.lensWidth;
     }
 
     @Input('lensHeight')
     public set setLensHeight(height: number) {
-        this.lensHeight = Number(height) || this.lensHeight;
+        this.zoomService.lensHeight = Number(height) || this.zoomService.lensHeight;
     }
 
     @Input('circularLens')
@@ -224,7 +224,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     private calculateLensBorder() {
         if (this.zoomService.enableLens) {
             if (this.circularLens) {
-                this.lensBorderRadius = this.lensWidth / 2;
+                this.lensBorderRadius = this.zoomService.lensWidth / 2;
             } else {
                 this.lensBorderRadius = 0;
             }

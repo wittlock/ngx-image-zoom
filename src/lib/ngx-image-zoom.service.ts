@@ -10,8 +10,8 @@ export class NgxImageZoomService {
     public thumbHeight = 0;
     public fullImageTop = 0;
     public fullImageLeft = 0;
-    public lensWidth = 0;
-    public lensHeight = 0;
+    public lensWidth = 100;
+    public lensHeight = 100;
     public lensTop = 0;
     public lensLeft = 0;
     public magnifiedWidth = 0;

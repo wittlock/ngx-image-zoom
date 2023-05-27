@@ -138,6 +138,10 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     @Input() titleText = '';
 
     ngOnInit(): void {
+        if (this.fullSizeImage === undefined) {
+            this.fullSizeImage = this.imageThumbnail;
+        }
+
         this.registerServiceSubscriptions();
 
         // Load zoom mode and set up configuration.

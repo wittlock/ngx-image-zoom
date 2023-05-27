@@ -1,8 +1,14 @@
 import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
 import { SafeUrl } from '@angular/platform-browser';
-import { NgxImageZoomService } from './ngx-image-zoom.service';
-import { ZoomMode } from './zoom-modes/zoom-mode';
 import { Subscription } from 'rxjs';
+import { NgxImageZoomService } from './ngx-image-zoom.service';
+import { ClickZoomMode } from './zoom-modes/click-mode';
+import { HoverFreezeZoomMode } from './zoom-modes/hover-freeze-mode';
+import { HoverZoomMode } from './zoom-modes/hover-zoom-mode';
+import { ToggleClickZoomMode } from './zoom-modes/toggle-click-mode';
+import { ToggleFreezeZoomMode } from './zoom-modes/toggle-freeze-mode';
+import { ToggleZoomMode } from './zoom-modes/toggle-zoom-mode';
+import { ZoomMode } from './zoom-modes/zoom-mode';
 
 export interface Coord {
     x: number;
@@ -52,8 +58,16 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     private subscriptions: Array<Subscription> = [];
     private eventListeners: (() => void)[] = [];
 
-    constructor(public zoomService: NgxImageZoomService, private renderer: Renderer2) {
-    }
+    private zoomModesMap = new Map<string, new (zoomService: NgxImageZoomService) => ZoomMode>([
+        ['click', ClickZoomMode],
+        ['hover-freeze', HoverFreezeZoomMode],
+        ['hover', HoverZoomMode],
+        ['toggle-click', ToggleClickZoomMode],
+        ['toggle-freeze', ToggleFreezeZoomMode],
+        ['toggle', ToggleZoomMode],
+    ]);
+
+    constructor(public zoomService: NgxImageZoomService, private renderer: Renderer2) {}
 
     @Input('thumbImage')
     public set setThumbImage(thumbImage: string | SafeUrl | null) {
@@ -157,13 +171,12 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     }
 
     private loadZoomMode(): void {
-        import(`./zoom-modes/${this.zoomMode}-zoom-mode`).then((zoomMode) => {
-            this.zoomInstance = new zoomMode.default(
-                this.zoomService
-            ) as ZoomMode;
-        }).catch((error) => {
-            console.error(`Failed to load zoom mode '${this.zoomMode}':`, error);
-        });
+        const ZoomModeClass = this.zoomModesMap.get(this.zoomMode);
+        if (ZoomModeClass) {
+            this.zoomInstance = new ZoomModeClass(this.zoomService);
+        } else {
+            console.error(`Unsupported zoom mode: ${this.zoomMode}`);
+        }
     }
 
     private registerEventListeners(): void {

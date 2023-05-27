@@ -1,18 +1,8 @@
-export abstract class ZoomMode {
-    onMouseEnter(event: MouseEvent): void {
-        // NOP
-    }
-    onMouseLeave(event: MouseEvent): void {
-        // NOP
-    }
-    onMouseMove(event: MouseEvent): void {
-        // NOP
-    }
-    onClick(event: MouseEvent): void {
-        // NOP
-    }
+export interface ZoomMode {
+    onClick(event: MouseEvent): void;
+    onMouseEnter(event: MouseEvent): void;
+    onMouseLeave(event: MouseEvent): void;
+    onMouseMove(event: MouseEvent): void;
     // Return value decides if we will try to zoom with the wheel event.
-    onMouseWheel(event: MouseEvent): boolean {
-        return true;
-    }
+    onMouseWheel(event: MouseEvent): boolean;
 }

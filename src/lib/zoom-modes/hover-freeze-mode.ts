@@ -1,11 +1,9 @@
 import { ZoomMode } from './zoom-mode';
 import { NgxImageZoomService } from '../ngx-image-zoom.service';
 
-export class HoverFreezeZoomMode extends ZoomMode {
+export class HoverFreezeZoomMode implements ZoomMode {
     private zoomFrozen = false;
-    constructor(private zoomService: NgxImageZoomService) {
-        super();
-    }
+    constructor(private zoomService: NgxImageZoomService) {}
 
     onClick(event: MouseEvent): void {
         if (this.zoomService.zoomingEnabled && this.zoomFrozen) {

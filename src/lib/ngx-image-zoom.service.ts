@@ -21,6 +21,7 @@ export class NgxImageZoomService {
     public zoomingEnabled = false;
     public isReady = false;
     public enableLens = false;
+    public baseRatio?: number;
     public minZoomRatio = 1;
     public maxZoomRatio = 2;
     public magnification = 1;
@@ -79,12 +80,12 @@ export class NgxImageZoomService {
             // this.fullWidth = this.fullSizeImage.nativeElement.naturalWidth;
             // this.fullHeight = this.fullSizeImage.nativeElement.naturalHeight;
 
-            const baseRatio = Math.max(
+            this.baseRatio = Math.max(
                 (this.thumbWidth / this.fullWidth),
                 (this.thumbHeight / this.fullHeight));
 
             // Don't allow zooming to smaller than thumbnail size
-            this.minZoomRatio = Math.max(this.minZoomRatio || 0, baseRatio || 0);
+            this.minZoomRatio = Math.max(this.minZoomRatio || 0, this.baseRatio || 0);
 
             this.calculateRatio();
         }

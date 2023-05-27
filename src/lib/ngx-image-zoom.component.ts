@@ -38,16 +38,16 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     public lensBorderRadius = 0;
 
     private zoomMode = 'hover';
-    private magnification = 1;
+    // private magnification = 1;
     private enableScrollZoom = false;
     private scrollStepSize = 0.1;
     private circularLens = false;
 
     // private lensWidth = 100;
     // private lensHeight = 100;
-    private baseRatio?: number;
-    private minZoomRatio = 1;
-    private maxZoomRatio = 2;
+    // private baseRatio?: number;
+    // private minZoomRatio = 1;
+    // private maxZoomRatio = 2;
     private thumbImageLoaded = false;
     // private fullImageLoaded = false;
 
@@ -95,13 +95,13 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input('minZoomRatio')
     public set setMinZoomRatio(minZoomRatio: number) {
-        const ratio = Number(minZoomRatio) || this.minZoomRatio || this.baseRatio || 0;
-        this.minZoomRatio = Math.max(ratio, this.baseRatio || 0);
+        const ratio = Number(minZoomRatio) || this.zoomService.minZoomRatio || this.zoomService.baseRatio || 0;
+        this.zoomService.minZoomRatio = Math.max(ratio, this.zoomService.baseRatio || 0);
     }
 
     @Input('maxZoomRatio')
     public set setMaxZoomRatio(maxZoomRatio: number) {
-        this.maxZoomRatio = Number(maxZoomRatio) || this.maxZoomRatio;
+        this.zoomService.maxZoomRatio = Number(maxZoomRatio) || this.zoomService.maxZoomRatio;
     }
 
     @Input('scrollStepSize')
@@ -261,10 +261,10 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
         const direction = Math.max(Math.min((event.wheelDelta || -event.detail), 1), -1);
         if (direction > 0) {
             // up
-            this.setMagnification = Math.min(this.magnification + this.scrollStepSize, this.maxZoomRatio);
+            this.setMagnification = Math.min(this.zoomService.magnification + this.scrollStepSize, this.zoomService.maxZoomRatio);
         } else {
             // down
-            this.setMagnification = Math.max(this.magnification - this.scrollStepSize, this.minZoomRatio);
+            this.setMagnification = Math.max(this.zoomService.magnification - this.scrollStepSize, this.zoomService.minZoomRatio);
         }
         this.zoomService.calculateRatio();
         this.zoomService.calculateZoomPosition(event);

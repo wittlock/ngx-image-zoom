@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, ElementRef, Injectable } from '@angular/core';
+import { ChangeDetectorRef, Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { Coord } from './ngx-image-zoom.component';
 
@@ -25,12 +25,12 @@ export class NgxImageZoomService {
     public maxZoomRatio = 2;
     public magnification = 1;
 
-    public imageThumbnail: ElementRef;
-    public fullSizeImage: ElementRef;
+    // public imageThumbnail: ElementRef;
+    // public fullSizeImage: ElementRef;
     public fullImageLoaded: boolean;
 
-    private fullWidth = 0;
-    private fullHeight = 0;
+    public fullWidth = 0;
+    public fullHeight = 0;
     private xRatio = 0;
     private yRatio = 0;
     private latestMouseLeft = -1;
@@ -59,8 +59,8 @@ export class NgxImageZoomService {
     }
 
     calculateRatioAndOffset() {
-        this.thumbWidth = this.imageThumbnail.nativeElement.width;
-        this.thumbHeight = this.imageThumbnail.nativeElement.height;
+        // this.thumbWidth = this.imageThumbnail.nativeElement.width;
+        // this.thumbHeight = this.imageThumbnail.nativeElement.height;
 
         // If lens is disabled, set lens size to equal thumb size and position it on top of the thumb
         if (!this.enableLens) {
@@ -70,13 +70,14 @@ export class NgxImageZoomService {
             this.lensTop = 0;
         }
 
-        if (this.fullSizeImage === undefined) {
+        // FIXME
+        /*if (this.fullSizeImage === undefined) {
             this.fullSizeImage = this.imageThumbnail;
-        }
+        }*/
 
         if (this.fullImageLoaded) {
-            this.fullWidth = this.fullSizeImage.nativeElement.naturalWidth;
-            this.fullHeight = this.fullSizeImage.nativeElement.naturalHeight;
+            // this.fullWidth = this.fullSizeImage.nativeElement.naturalWidth;
+            // this.fullHeight = this.fullSizeImage.nativeElement.naturalHeight;
 
             const baseRatio = Math.max(
                 (this.thumbWidth / this.fullWidth),

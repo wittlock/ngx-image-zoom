@@ -35,8 +35,6 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
 
     public thumbImage?: string | SafeUrl | null;
     public fullImage?: string | SafeUrl | null;
-    public thumbWidth = 0;
-    public thumbHeight = 0;
     public lensBorderRadius = 0;
 
     private zoomMode = 'hover';
@@ -51,8 +49,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     private minZoomRatio = 1;
     private maxZoomRatio = 2;
     private thumbImageLoaded = false;
-    private fullImageLoaded = false;
-
+    // private fullImageLoaded = false;
 
     private zoomInstance: ZoomMode | undefined;
     private subscriptions: Array<Subscription> = [];
@@ -78,7 +75,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input('fullImage')
     public set setFullImage(fullImage: string | SafeUrl | null) {
-        this.fullImageLoaded = false;
+        this.zoomService.fullImageLoaded = false;
         this.setIsReady(false);
         this.fullImage = fullImage;
     }
@@ -141,10 +138,6 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     @Input() titleText = '';
 
     ngOnInit(): void {
-        // Pass along image references to the service.
-        this.zoomService.imageThumbnail = this.imageThumbnail;
-        this.zoomService.fullSizeImage = this.fullSizeImage;
-
         this.registerServiceSubscriptions();
 
         // Load zoom mode and set up configuration.
@@ -182,11 +175,14 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     private registerEventListeners(): void {
         if (this.zoomInstance) {
             const nativeElement = this.zoomContainer.nativeElement;
+
             this.eventListeners.push(
                 this.renderer.listen(nativeElement, 'mouseenter', (event) => this.zoomInstance.onMouseEnter(event)),
                 this.renderer.listen(nativeElement, 'mouseleave', (event) => this.zoomInstance.onMouseLeave(event)),
                 this.renderer.listen(nativeElement, 'mousemove', (event) => this.zoomInstance.onMouseLeave(event)),
                 this.renderer.listen(nativeElement, 'click', (event) => this.zoomInstance.onMouseLeave(event)),
+
+                // Chrome: 'mousewheel', Firefox: 'DOMMouseScroll', IE: 'onmousewheel'
                 this.renderer.listen(nativeElement, 'mousewheel', (event) => {
                     if (this.zoomInstance.onMouseWheel(event)) {
                         this.onMouseWheel(event);
@@ -210,12 +206,18 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
      * Template helper methods
      */
     onThumbImageLoaded() {
+        // Pass along image sizes to the service.
+        this.zoomService.thumbWidth = this.imageThumbnail.nativeElement.width;
+        this.zoomService.thumbHeight = this.imageThumbnail.nativeElement.height;
         this.thumbImageLoaded = true;
         this.checkImagesLoaded();
     }
 
     onFullImageLoaded() {
-        this.fullImageLoaded = true;
+        // Pass along image sizes to the service.
+        this.zoomService.fullWidth = this.fullSizeImage.nativeElement.naturalWidth;
+        this.zoomService.fullHeight = this.fullSizeImage.nativeElement.naturalHeight;
+        this.zoomService.fullImageLoaded = true;
         this.checkImagesLoaded();
     }
 
@@ -231,7 +233,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
 
     private checkImagesLoaded() {
         this.zoomService.calculateRatioAndOffset();
-        if (this.thumbImageLoaded && this.fullImageLoaded) {
+        if (this.thumbImageLoaded && this.zoomService.fullImageLoaded) {
             this.zoomService.calculateImageAndLensPosition();
             this.setIsReady(true);
         }

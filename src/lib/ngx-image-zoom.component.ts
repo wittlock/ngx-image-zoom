@@ -179,8 +179,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
             this.eventListeners.push(
                 this.renderer.listen(nativeElement, 'mouseenter', (event) => this.zoomInstance.onMouseEnter(event)),
                 this.renderer.listen(nativeElement, 'mouseleave', (event) => this.zoomInstance.onMouseLeave(event)),
-                this.renderer.listen(nativeElement, 'mousemove', (event) => this.zoomInstance.onMouseLeave(event)),
-                this.renderer.listen(nativeElement, 'click', (event) => this.zoomInstance.onMouseLeave(event)),
+                this.renderer.listen(nativeElement, 'mousemove', (event) => this.zoomInstance.onMouseMove(event)),
+                this.renderer.listen(nativeElement, 'click', (event) => this.zoomInstance.onClick(event)),
 
                 // Chrome: 'mousewheel', Firefox: 'DOMMouseScroll', IE: 'onmousewheel'
                 this.renderer.listen(nativeElement, 'mousewheel', (event) => {

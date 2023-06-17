@@ -12,10 +12,16 @@ export class ToggleZoomMode implements ZoomMode {
         }
     }
 
-    onMouseEnter(event: MouseEvent): void {}
-    onMouseLeave(event: MouseEvent): void {}
-    onMouseMove(event: MouseEvent): void {}
-    onMouseWheel(event: MouseEvent): boolean {
+    onMouseEnter(): void {
+        // NOP
+    }
+    onMouseLeave(): void {
+        // NOP
+    }
+    onMouseMove(): void {
+        // NOP
+    }
+    onMouseWheel(): boolean {
         return true;
     }
 }

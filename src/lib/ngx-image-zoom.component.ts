@@ -245,6 +245,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * Mouse wheel event
      */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private onMouseWheel(event: any) {
         // Don't eat events if scrollZoom or zooming isn't active
         if (!this.enableScrollZoom || !this.zoomService.zoomingEnabled) {

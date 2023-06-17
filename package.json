@@ -3,10 +3,12 @@
     "version": "2.1.0",
     "scripts": {
         "build": "ng build ngx-image-zoom",
-        "build:release": "ng build ngx-image-zoom --configuration production",
+        "build:release": "npm run lint && npm run prettier:check && ng build ngx-image-zoom --configuration production",
         "build:watch": "ng build ngx-image-zoom --watch",
         "ng": "ng",
         "lint": "ng lint",
+        "prettier:check": "npx prettier --check .",
+        "prettier:fix": "npx prettier --write .",
         "release": "npm run build:release && npm publish dist/",
         "release:beta": "npm run build:release && npm publish dist/ --tag beta",
         "start": "ng serve",

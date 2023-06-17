@@ -4,7 +4,6 @@ import { Coord } from './ngx-image-zoom.component';
 
 @Injectable()
 export class NgxImageZoomService {
-
     public zoomDisplay = 'none';
     public thumbWidth = 0;
     public thumbHeight = 0;
@@ -67,9 +66,7 @@ export class NgxImageZoomService {
         }
 
         if (this.fullImageLoaded) {
-            this.baseRatio = Math.max(
-                (this.thumbWidth / this.fullWidth),
-                (this.thumbHeight / this.fullHeight));
+            this.baseRatio = Math.max(this.thumbWidth / this.fullWidth, this.thumbHeight / this.fullHeight);
 
             // Don't allow zooming to smaller than thumbnail size
             this.minZoomRatio = Math.max(this.minZoomRatio || 0, this.baseRatio || 0);
@@ -108,8 +105,8 @@ export class NgxImageZoomService {
             this.lensTop = lensTopMod;
         }
 
-        this.fullImageLeft = (this.latestMouseLeft * -this.xRatio) - lensLeftMod;
-        this.fullImageTop = (this.latestMouseTop * -this.yRatio) - lensTopMod;
+        this.fullImageLeft = this.latestMouseLeft * -this.xRatio - lensLeftMod;
+        this.fullImageTop = this.latestMouseTop * -this.yRatio - lensTopMod;
     }
 
     private setZoomPosition(left: number, top: number) {
@@ -118,7 +115,7 @@ export class NgxImageZoomService {
 
         const newPosition: Coord = {
             x: this.latestMouseLeft,
-            y: this.latestMouseTop
+            y: this.latestMouseTop,
         };
         this.zoomPosition.next(newPosition);
     }

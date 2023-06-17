@@ -7,13 +7,12 @@
 This version is only tested with Angular15. Moving forward this library may or may not work on older versions
 of Angular anymore.
 
-Still in early development, more features are planned and incoming. Should be in a working 
+Still in early development, more features are planned and incoming. Should be in a working
 state right now but it's not tested in lots of different setups yet.
 
 **Breaking changes** in version 0.5.0, see [changelog](CHANGELOG.md) for details.
 
 Demonstration of available features available [here](https://wittlock.github.io/ngx-image-zoom/).
-
 
 **Breaking changes** in version 2.0.0, see [changelog](CHANGELOG.md) for details.
 
@@ -21,7 +20,7 @@ Demonstration of available features available ([here](https://wittlock.github.io
 
 ## About
 
-NgxImageZoom is inspired by [angular2-image-zoom](https://github.com/brtnshrdr/angular2-image-zoom) and 
+NgxImageZoom is inspired by [angular2-image-zoom](https://github.com/brtnshrdr/angular2-image-zoom) and
 JQuery libraries such as [jQuery Zoom](http://www.jacklmoore.com/zoom/) and
 [elevateZoom-plus](http://igorlino.github.io/elevatezoom-plus/) but a pure Angular2+ implementation of
 similar concepts. This plugin works with both URLs to images and in-line images
@@ -29,13 +28,13 @@ similar concepts. This plugin works with both URLs to images and in-line images
 
 ## Available options
 
-All settings except *thumbImage* are optional. If no *fullImage* is provided the thumbImage will be
+All settings except _thumbImage_ are optional. If no _fullImage_ is provided the thumbImage will be
 used as the high resolution version as well.
 
 |      Option      | Default&#160;value | Description                                                                                                                        |
-|:----------------:|:------------------:|------------------------------------------------------------------------------------------------------------------------------------|
-|    thumbImage    |       *none*       | (Required) The smaller version of the image that will be shown when there's no interaction by the user. String or SafeUrl type.    |
-|    fullImage     |       *none*       | The full resolution version of the image to be used when zooming. If not supplied thumbImage will be used. String or SafeUrl type. |
+| :--------------: | :----------------: | ---------------------------------------------------------------------------------------------------------------------------------- |
+|    thumbImage    |       _none_       | (Required) The smaller version of the image that will be shown when there's no interaction by the user. String or SafeUrl type.    |
+|    fullImage     |       _none_       | The full resolution version of the image to be used when zooming. If not supplied thumbImage will be used. String or SafeUrl type. |
 |  magnification   |         1          | The zoom factor to be used by default. 1 means we use the fullImage at its actual resolution.                                      |
 |     zoomMode     |      'hover'       | The mode of zooming to use, these are explained in a table below.                                                                  |
 | enableScrollZoom |       false        | Boolean that toggles if the mouse wheel should be captured when hovering over the image to adjust magnification.                   |
@@ -44,14 +43,15 @@ used as the high resolution version as well.
 |    lensWidth     |        100         | Width of the lens, if enabled.                                                                                                     |
 |    lensHeight    |        100         | Height of the lens, if enabled.                                                                                                    |
 |   circularLens   |       false        | Make the lens circular instead of square. This will only look good if width and height are equal.                                  |
-|   minZoomRatio   |    *baseRatio*     | Lower limit on how much zoom can be applied with scrollZoom enabled. See below for details.                                        |
+|   minZoomRatio   |    _baseRatio_     | Lower limit on how much zoom can be applied with scrollZoom enabled. See below for details.                                        |
 |   maxZoomRatio   |         2          | Upper limit on how much zoom can be applied with scrollZoom enabled. See below for details.                                        |
 |     altText      |         ''         | `alt` attribute of the thumb and full image.                                                                                       |
 |    titleText     |         ''         | `title` attribute of the thumb and full image.                                                                                     |
 
 ### Zoom modes
+
 |     Mode      | Description                                                                                                                                                          |
-|:-------------:|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| :-----------: | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 |     hover     | Whenever the mouse cursor moves over the thumbnail it will show the zoomed image until it leaves the thumbnail.                                                      |
 |     click     | Similar to hover but it only starts zooming if the user clicks the image. Moving the cursor away from the image disables it again.                                   |
 |    toggle     | A click in the image will zoom at the point of the cursor. Another click will restore the small image.                                                               |
@@ -60,18 +60,19 @@ used as the high resolution version as well.
 | hover-freeze  | Whenever the mouse cursor moves over the thumbnail it will show the zoomed image, first click freezes the zoomed image where it is, second click restores thumbnail. |
 
 ### Zoom ratio
-The zoom ratio used in the *minZoomRatio* and *maxZoomRatio* settings refer to the relative size of the thumbnail
-and the full size image. The *baseRatio* default value is the calculated ratio that would make the zoomed image equal
-in size to the thumbnail. For example, if the full size image is 10x larger than the thumbnail, then *minZoomRatio* will
-default to *0.1*, as in the full size image can at its smallest be shown at 0.1 times its original size. The default
-value for *maxZoomRatio* being *1* means the largest the fullSize image can appear is twice its original size. 
+
+The zoom ratio used in the _minZoomRatio_ and _maxZoomRatio_ settings refer to the relative size of the thumbnail
+and the full size image. The _baseRatio_ default value is the calculated ratio that would make the zoomed image equal
+in size to the thumbnail. For example, if the full size image is 10x larger than the thumbnail, then _minZoomRatio_ will
+default to _0.1_, as in the full size image can at its smallest be shown at 0.1 times its original size. The default
+value for _maxZoomRatio_ being _1_ means the largest the fullSize image can appear is twice its original size.
 
 ## Available output
 
 The component outputs the follow events that can be triggered on.
 
 | Event&#160;name | Description                                                                                                                                                                                                                                          |
-|:---------------:|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| :-------------: | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 |   zoomScroll    | Whenever the user changes the zoom level using the scroll wheel this event will fire with the current zoom ratio (see above).                                                                                                                        |
 |  zoomPosition   | When the point on where the zoom is focused changes this event emits a Coord event (interface exported from the module) with X/Y in pixels relative thumbnails top left corner. Practically whenever the user moves the mouse cursor over the image. |
 |  imagesLoaded   | When the thumbnail and fullImage are loaded and ready to be used this output emits "true". It will emit "false" if images are changed and on initial setup                                                                                           |
@@ -98,17 +99,15 @@ import { AppComponent } from './app.component';
 import { NgxImageZoomModule } from 'ngx-image-zoom';
 
 @NgModule({
-  declarations: [
-    AppComponent
-  ],
-  imports: [
-    BrowserModule,
-    NgxImageZoomModule // <-- Add this line
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [AppComponent],
+    imports: [
+        BrowserModule,
+        NgxImageZoomModule, // <-- Add this line
+    ],
+    providers: [],
+    bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
 ```
 
 Once the library is imported, you can use its component in your Angular application:

@@ -13,11 +13,11 @@ import {
 import { SafeUrl } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { NgxImageZoomService } from './ngx-image-zoom.service';
-import { ClickZoomMode } from './zoom-modes/click-mode';
-import { HoverFreezeZoomMode } from './zoom-modes/hover-freeze-mode';
+import { ClickZoomMode } from './zoom-modes/click-zoom-mode';
+import { HoverFreezeZoomMode } from './zoom-modes/hover-freeze-zoom-mode';
 import { HoverZoomMode } from './zoom-modes/hover-zoom-mode';
-import { ToggleClickZoomMode } from './zoom-modes/toggle-click-mode';
-import { ToggleFreezeZoomMode } from './zoom-modes/toggle-freeze-mode';
+import { ToggleClickZoomMode } from './zoom-modes/toggle-click-zoom-mode';
+import { ToggleFreezeZoomMode } from './zoom-modes/toggle-freeze-zoom-mode';
 import { ToggleZoomMode } from './zoom-modes/toggle-zoom-mode';
 import { ZoomMode } from './zoom-modes/zoom-mode';
 

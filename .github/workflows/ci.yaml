@@ -11,6 +11,7 @@ on:
 
 jobs:
     build:
+        name: Pull Request build test
         runs-on: ubuntu-latest
 
         steps:

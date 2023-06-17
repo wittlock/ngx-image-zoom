@@ -3,7 +3,7 @@
     "version": "2.1.0",
     "scripts": {
         "build": "ng build ngx-image-zoom",
-        "build:release": "npm run lint && npm run prettier:check && ng build ngx-image-zoom --configuration production",
+        "build:release": "npm run lint && npm run prettier:check && npm run test:ci && ng build ngx-image-zoom --configuration production",
         "build:watch": "ng build ngx-image-zoom --watch",
         "ng": "ng",
         "lint": "ng lint",

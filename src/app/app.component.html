@@ -1,0 +1,75 @@
+<div class="container">
+    <h4>NgxImageZoom mode demo</h4>
+    <p>
+        Below follows a couple of example of the various settings that can be used with NgxImageZoom. Most of these
+        settings can be combined freely in more ways than are shown here.<br/>
+        This demo is running on NgxImageZoom version {{ ngxImageZoomVersion }}
+    </p>
+    <table class="table">
+        <tr *ngFor="let mode of modes">
+            <td>
+                <ul>
+                    <li *ngIf="mode.zoomMode">Zoom mode: <em>{{ mode.zoomMode }}</em></li>
+                    <li *ngIf="mode.scrollZoom">Scroll zooming: <em>enabled</em></li>
+                    <li *ngIf="mode.magnification != 1">Magnification: <em>{{ mode.magnification }}</em></li>
+                    <li *ngIf="mode.lensMode">Lens mode: <em>enabled</em></li>
+                    <li *ngIf="mode.lensWidth">Lens width: <em>{{ mode.lensWidth }}</em></li>
+                    <li *ngIf="mode.lensHeight">Lens height: <em>{{ mode.lensHeight }}</em></li>
+                    <li *ngIf="mode.circularLens">Circular lens: <em>enabled</em></li>
+                </ul>
+            </td>
+            <td>
+                <lib-ngx-image-zoom
+                    [thumbImage]=thumbImage
+                    [fullImage]=fullImage
+                    [zoomMode]=mode.zoomMode
+                    [magnification]=mode.magnification
+                    [enableScrollZoom]=mode.scrollZoom
+                    [enableLens]=mode.lensMode
+                    [lensWidth]=mode.lensWidth
+                    [lensHeight]=mode.lensHeight
+                    [circularLens]=mode.circularLens
+                ></lib-ngx-image-zoom>
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <ul>
+                    <li>Zoom mode: <em>hover</em></li>
+                    <li>Scroll zooming: <em>enabled</em></li>
+                    <li>Lens mode: <em>enabled</em></li>
+                </ul>
+                Module output:
+                <ul>
+                    <li>Magnification: {{ zoomScrollValue | number: '1.0-2' }}</li>
+                    <li>Cursor position:
+                        <ul>
+                            <li>X: {{ zoomCoords?.x | number: '1.0-2' }}</li>
+                            <li>Y: {{ zoomCoords?.y | number: '1.0-2' }}</li>
+                        </ul>
+                    </li>
+                </ul>
+            </td>
+            <td>
+                <lib-ngx-image-zoom
+                    [thumbImage]=thumbImage
+                    [fullImage]=fullImage
+                    zoomMode="hover"
+                    [enableScrollZoom]=true
+                    [enableLens]=true
+                    (zoomScroll)="zoomScroll($event)"
+                    (zoomPosition)="zoomPosition($event)"
+                ></lib-ngx-image-zoom>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <p class="font-weight-light text-center">
+                    Image courtesy of pexels.com under CC0 license.
+                </p>
+            </td>
+        </tr>
+    </table>
+</div>

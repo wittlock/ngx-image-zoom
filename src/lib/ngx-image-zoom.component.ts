@@ -1,4 +1,15 @@
-import { Component, ElementRef, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, Renderer2, ViewChild } from '@angular/core';
+import {
+    Component,
+    ElementRef,
+    EventEmitter,
+    Input,
+    OnChanges,
+    OnDestroy,
+    OnInit,
+    Output,
+    Renderer2,
+    ViewChild,
+} from '@angular/core';
 import { SafeUrl } from '@angular/platform-browser';
 import { Subscription } from 'rxjs';
 import { NgxImageZoomService } from './ngx-image-zoom.service';
@@ -19,15 +30,21 @@ export interface Coord {
     selector: 'lib-ngx-image-zoom',
     templateUrl: './ngx-image-zoom.component.html',
     styleUrls: ['./ngx-image-zoom.component.css'],
-    providers: [NgxImageZoomService]
+    providers: [NgxImageZoomService],
 })
 export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
+    private static readonly validZoomModes: string[] = [
+        'hover',
+        'toggle',
+        'click',
+        'toggle-click',
+        'toggle-freeze',
+        'hover-freeze',
+    ];
 
-    private static readonly validZoomModes: string[] = ['hover', 'toggle', 'click', 'toggle-click', 'toggle-freeze', 'hover-freeze'];
-
-    @ViewChild('zoomContainer', {static: true}) zoomContainer !: ElementRef;
-    @ViewChild('imageThumbnail', {static: true}) imageThumbnail !: ElementRef;
-    @ViewChild('fullSizeImage', {static: true}) fullSizeImage !: ElementRef;
+    @ViewChild('zoomContainer', { static: true }) zoomContainer!: ElementRef;
+    @ViewChild('imageThumbnail', { static: true }) imageThumbnail!: ElementRef;
+    @ViewChild('fullSizeImage', { static: true }) fullSizeImage!: ElementRef;
 
     @Output() zoomScroll = new EventEmitter<number>();
     @Output() zoomPosition = new EventEmitter<Coord>();
@@ -75,7 +92,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input('zoomMode')
     public set setZoomMode(zoomMode: string) {
-        if (NgxImageZoomComponent.validZoomModes.some(m => m === zoomMode)) {
+        if (NgxImageZoomComponent.validZoomModes.some((m) => m === zoomMode)) {
             this.zoomMode = zoomMode;
         }
     }
@@ -157,7 +174,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
 
     private registerServiceSubscriptions() {
         this.subscriptions.push(
-            this.zoomService.zoomPosition.subscribe((position) => this.zoomPosition.emit(position)),
+            this.zoomService.zoomPosition.subscribe((position) => this.zoomPosition.emit(position))
         );
     }
 
@@ -245,6 +262,7 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
     /**
      * Mouse wheel event
      */
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private onMouseWheel(event: any) {
         // Don't eat events if scrollZoom or zooming isn't active
         if (!this.enableScrollZoom || !this.zoomService.zoomingEnabled) {
@@ -252,13 +270,19 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
         }
 
         event = window.event || event; // old IE
-        const direction = Math.max(Math.min((event.wheelDelta || -event.detail), 1), -1);
+        const direction = Math.max(Math.min(event.wheelDelta || -event.detail, 1), -1);
         if (direction > 0) {
             // up
-            this.setMagnification = Math.min(this.zoomService.magnification + this.scrollStepSize, this.zoomService.maxZoomRatio);
+            this.setMagnification = Math.min(
+                this.zoomService.magnification + this.scrollStepSize,
+                this.zoomService.maxZoomRatio
+            );
         } else {
             // down
-            this.setMagnification = Math.max(this.zoomService.magnification - this.scrollStepSize, this.zoomService.minZoomRatio);
+            this.setMagnification = Math.max(
+                this.zoomService.magnification - this.scrollStepSize,
+                this.zoomService.minZoomRatio
+            );
         }
         this.zoomService.calculateRatio();
         this.zoomService.calculateZoomPosition(event);

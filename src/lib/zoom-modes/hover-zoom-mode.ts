@@ -4,13 +4,15 @@ import { NgxImageZoomService } from '../ngx-image-zoom.service';
 export class HoverZoomMode implements ZoomMode {
     constructor(private zoomService: NgxImageZoomService) {}
 
-    onClick(event: MouseEvent): void {}
+    onClick(): void {
+        // NOP
+    }
 
     onMouseEnter(event: MouseEvent): void {
         this.zoomService.zoomOn(event);
     }
 
-    onMouseLeave(event: MouseEvent): void {
+    onMouseLeave(): void {
         this.zoomService.zoomOff();
     }
 
@@ -18,7 +20,7 @@ export class HoverZoomMode implements ZoomMode {
         this.zoomService.calculateZoomPosition(event);
     }
 
-    onMouseWheel(event: MouseEvent): boolean {
+    onMouseWheel(): boolean {
         return true;
     }
 }

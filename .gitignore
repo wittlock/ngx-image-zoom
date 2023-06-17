@@ -4,6 +4,7 @@
 /dist
 /tmp
 /out-tsc
+/demosite
 
 # dependencies
 /node_modules

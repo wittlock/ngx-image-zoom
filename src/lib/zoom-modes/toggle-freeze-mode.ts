@@ -17,9 +17,11 @@ export class ToggleFreezeZoomMode implements ZoomMode {
         }
     }
 
-    onMouseEnter(event: MouseEvent): void {}
+    onMouseEnter(): void {
+        // NOP
+    }
 
-    onMouseLeave(event: MouseEvent): void {
+    onMouseLeave(): void {
         if (this.zoomService.zoomingEnabled && !this.zoomFrozen) {
             this.zoomService.zoomOff();
         }
@@ -31,7 +33,7 @@ export class ToggleFreezeZoomMode implements ZoomMode {
         }
     }
 
-    onMouseWheel(event: MouseEvent): boolean {
+    onMouseWheel(): boolean {
         // Prevent scroll zoom if we're frozen
         return !this.zoomFrozen;
     }

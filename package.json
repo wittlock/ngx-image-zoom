@@ -3,14 +3,17 @@
     "version": "2.1.0",
     "scripts": {
         "build": "ng build ngx-image-zoom",
-        "build:release": "ng build ngx-image-zoom --configuration production",
+        "build:release": "npm run lint && npm run prettier:check && ng build ngx-image-zoom --configuration production",
         "build:watch": "ng build ngx-image-zoom --watch",
         "ng": "ng",
         "lint": "ng lint",
+        "prettier:check": "npx prettier --check .",
+        "prettier:fix": "npx prettier --write .",
         "release": "npm run build:release && npm publish dist/",
         "release:beta": "npm run build:release && npm publish dist/ --tag beta",
         "start": "ng serve",
-        "test": "ng test"
+        "test": "ng test",
+        "test:ci": "ng test --browsers=ChromeHeadless --watch=false"
     },
     "repository": {
         "type": "git",
@@ -29,12 +32,16 @@
     "bugs": {
         "url": "https://www.github.com/wittlock/ngx-image-zoom/issues"
     },
-    "peerDependencies": {},
     "dependencies": {
         "tslib": "^2.5.2"
     },
     "devDependencies": {
         "@angular-devkit/build-angular": "^15.1.4",
+        "@angular-eslint/builder": "15.2.1",
+        "@angular-eslint/eslint-plugin": "15.2.1",
+        "@angular-eslint/eslint-plugin-template": "15.2.1",
+        "@angular-eslint/schematics": "15.2.1",
+        "@angular-eslint/template-parser": "15.2.1",
         "@angular/animations": "^15.1.3",
         "@angular/cli": "^15.1.4",
         "@angular/common": "^15.1.3",
@@ -46,10 +53,14 @@
         "@angular/platform-browser": "^15.1.3",
         "@angular/platform-browser-dynamic": "^15.1.3",
         "@angular/router": "^15.1.3",
-        "@types/node": "^18.13.0",
         "@types/jasmine": "~4.3.1",
         "@types/jasminewd2": "~2.0.10",
+        "@types/node": "^18.13.0",
+        "@typescript-eslint/eslint-plugin": "5.48.2",
+        "@typescript-eslint/parser": "5.48.2",
         "codelyzer": "^6.0.2",
+        "eslint": "^8.33.0",
+        "eslint-config-prettier": "^8.8.0",
         "jasmine-core": "~4.5.0",
         "jasmine-spec-reporter": "~7.0.0",
         "karma": "~6.4.1",
@@ -58,10 +69,10 @@
         "karma-jasmine": "~5.1.0",
         "karma-jasmine-html-reporter": "^2.0.0",
         "ng-packagr": "^15.1.1",
+        "prettier": "2.8.8",
         "protractor": "~7.0.0",
         "rxjs": "~7.8.0",
         "ts-node": "~10.9.1",
-        "tslint": "~6.1.0",
         "typescript": "~4.9.5",
         "zone.js": "~0.12.0"
     }

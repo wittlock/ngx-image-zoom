@@ -10,9 +10,11 @@ export class ClickZoomMode implements ZoomMode {
         }
     }
 
-    onMouseEnter(event: MouseEvent): void {}
+    onMouseEnter(): void {
+        // NOP
+    }
 
-    onMouseLeave(event: MouseEvent): void {
+    onMouseLeave(): void {
         this.zoomService.zoomOff();
     }
 
@@ -22,7 +24,7 @@ export class ClickZoomMode implements ZoomMode {
         }
     }
 
-    onMouseWheel(event: MouseEvent): boolean {
+    onMouseWheel(): boolean {
         return true;
     }
 }

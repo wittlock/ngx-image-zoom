@@ -7,9 +7,8 @@ describe('NgxImageZoomComponent', () => {
 
     beforeEach(async(() => {
         TestBed.configureTestingModule({
-            declarations: [NgxImageZoomComponent]
-        })
-            .compileComponents();
+            declarations: [NgxImageZoomComponent],
+        }).compileComponents();
     }));
 
     beforeEach(() => {

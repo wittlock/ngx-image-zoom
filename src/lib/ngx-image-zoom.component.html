@@ -5,7 +5,7 @@
     [style.height.px]="this.zoomService.thumbHeight"
 >
     <picture>
-        <source [srcset]="thumbImage" />
+        <source *ngFor="let item of thumbImageSource" [srcset]="item.src" [media]="item.media" />
         <img
             #imageThumbnail
             [alt]="altText"
@@ -29,7 +29,7 @@
         [style.border-radius.px]="this.lensBorderRadius"
     >
         <picture>
-            <source [srcset]="fullImage" />
+            <source *ngFor="let item of fullImageSource" [srcset]="item.src" [media]="item.media" />
             <img
                 #fullSizeImage
                 class="ngxImageZoomFull"

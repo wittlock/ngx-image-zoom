@@ -26,6 +26,11 @@ export interface Coord {
     y: number;
 }
 
+export interface Source {
+    src: string;
+    media: string;
+}
+
 @Component({
     selector: 'lib-ngx-image-zoom',
     templateUrl: './ngx-image-zoom.component.html',
@@ -146,6 +151,8 @@ export class NgxImageZoomComponent implements OnInit, OnChanges, OnDestroy {
 
     @Input() altText = '';
     @Input() titleText = '';
+    @Input() thumbImageSource: Source[] = [];
+    @Input() fullImageSource: Source[] = [];
 
     ngOnInit(): void {
         // If no full size image is defined, we add the thumbnail as the full size too.

@@ -1,6 +1,6 @@
 {
     "name": "ngx-image-zoom",
-    "version": "2.1.0",
+    "version": "3.0.0",
     "scripts": {
         "build": "ng build ngx-image-zoom",
         "build:release": "npm run lint && npm run prettier:check && npm run test:ci && ng build ngx-image-zoom --configuration production",

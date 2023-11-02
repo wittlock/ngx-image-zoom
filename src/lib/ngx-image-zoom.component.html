@@ -4,14 +4,17 @@
     [style.width.px]="this.zoomService.thumbWidth"
     [style.height.px]="this.zoomService.thumbHeight"
 >
-    <img
-        #imageThumbnail
-        class="ngxImageZoomThumbnail"
-        [alt]="altText"
-        [title]="titleText"
-        [src]="thumbImage"
-        (load)="onThumbImageLoaded()"
-    />
+    <picture>
+        <source *ngFor="let item of thumbImageSource" [srcset]="item.src" [media]="item.media" />
+        <img
+            #imageThumbnail
+            [alt]="altText"
+            [title]="titleText"
+            [src]="thumbImage"
+            (load)="onThumbImageLoaded()"
+            class="ngxImageZoomThumbnail"
+        />
+    </picture>
 
     <div
         [ngClass]="{
@@ -25,18 +28,21 @@
         [style.height.px]="this.zoomService.lensHeight"
         [style.border-radius.px]="this.lensBorderRadius"
     >
-        <img
-            #fullSizeImage
-            class="ngxImageZoomFull"
-            [alt]="altText"
-            [title]="titleText"
-            [src]="fullImage"
-            (load)="onFullImageLoaded()"
-            [style.display]="this.zoomService.zoomDisplay"
-            [style.top.px]="this.zoomService.fullImageTop"
-            [style.left.px]="this.zoomService.fullImageLeft"
-            [style.width.px]="this.zoomService.magnifiedWidth"
-            [style.height.px]="this.zoomService.magnifiedHeight"
-        />
+        <picture>
+            <source *ngFor="let item of fullImageSource" [srcset]="item.src" [media]="item.media" />
+            <img
+                #fullSizeImage
+                class="ngxImageZoomFull"
+                [alt]="altText"
+                [title]="titleText"
+                [src]="fullImage"
+                (load)="onFullImageLoaded()"
+                [style.display]="this.zoomService.zoomDisplay"
+                [style.top.px]="this.zoomService.fullImageTop"
+                [style.left.px]="this.zoomService.fullImageLeft"
+                [style.width.px]="this.zoomService.magnifiedWidth"
+                [style.height.px]="this.zoomService.magnifiedHeight"
+            />
+        </picture>
     </div>
 </div>
